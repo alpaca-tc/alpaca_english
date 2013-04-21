@@ -17,7 +17,7 @@ module AlpacaEnglish
         dup.each_with_object([]) do |record, candidates|
           # TODO 形容詞、自動詞など表示出来たらいいね。
           candidate = {
-            word: "#{record.word} #{record.send(:mean)}",
+            word: "#{record.word}",
             abbr: "#{record.word} #{record.send(:mean)}",
             menu: "[alp_en]"
           }
