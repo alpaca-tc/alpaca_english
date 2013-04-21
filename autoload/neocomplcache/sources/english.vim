@@ -24,8 +24,9 @@ function! s:source.get_keyword_list(cur_keyword_str) "{{{
   " XXX pythonとか環境によって変えたいから、ストラテジーパターンみたいにメソッ
   " ドを変えたい。
   " ダレカ、ウツクシイカキカタ、タノム
-  let lang = g:alpaca_english_module_settings["complete"]
+  let lang = alpaca_english#select_language()
   execute 'let result = alpaca_english#'.lang.'#complete#do(a:cur_keyword_str)'
+
   return result
 endfunction"}}}
 

@@ -20,32 +20,34 @@ EOF
 endfunction"}}}
 
 function! alpaca_english#ruby#complete#do(word) "{{{
-  " initialize
+  " initialize {{{
   if !exists('s:initialized')
     let s:initialized = 1
     call alpaca_english#ruby#initialize()
     call s:initialize()
-
-    return []
   endif
+  "}}}
 
-  ruby << EOF
-  begin
-    word = VIM.evaluate("a:word")
-    # limit =  VIM.evaluate("g:alpaca_english_limit")
-    items = ::Item.where('word like ?', "#{word}%").limit(10).all
-    VIM.command(%Q!let s:completion_words = #{items.to_completely_json}!)
-  rescue => e
-    VIM.command(%Q!let s:completion_words = []!)
-  end
+  try
+    ruby << EOF
+    begin
+      word = VIM.evaluate("a:word")
+      # limit =  VIM.evaluate("g:alpaca_english_limit")
+      items = ::Item.where('word like ?', "#{word}%").limit(10).all
+      VIM.command(%Q!let s:completion_words = #{items.to_completely_json}!)
+    rescue => e
+      VIM::message(e)
+    end
 EOF
 
-  if exists("s:completion_words") && type(s:completion_words) == type([])
-    let g:test = s:completion_words
-    return s:completion_words
-  else
-    return []
-  endif
-endfunction "}}}
+    if exists("s:completion_words") && type(s:completion_words) == type([])
+      return s:completion_words
+    else
+      return []
+    endif
 
-" echo alpaca_english#where_like("nex")
+  catch /.*/
+    call alpaca_english#print_error('error occurred')
+    return []
+  endtry
+endfunction "}}}
