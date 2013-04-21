@@ -29,12 +29,8 @@ function! s:source.get_keyword_list(cur_keyword_str) "{{{
   return result
 endfunction"}}}
 
-function! s:is_active() "{{{
-  return has('ruby') && exists('g:alpaca_english_db_path') && g:alpaca_english_enable
-endfunction"}}}
-
 function! neocomplcache#sources#english#define() "{{{
-  return s:is_active() ? s:source : {}
+  return alpaca_english#is_active() ? s:source : {}
 endfunction"}}}
 
 " vim: foldmethod=marker
