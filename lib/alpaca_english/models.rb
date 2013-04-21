@@ -4,7 +4,7 @@ module AlpacaEnglish# {{{
       # after_initialize :set_mark
       # has_one :mark
       scope :default, lambda {
-        count = VIM.evaluate("g:alpaca_english_max_candidates") || 30
+        count = VIM.evaluate("g:alpaca_english_max_candidates")
         limit(count)
       }
 
