@@ -20,11 +20,7 @@ function! s:source.get_keyword_list(cur_keyword_str) "{{{
     return []
   endif
 
-  " XXX pythonとか環境によって変えたいから、
-  " ストラテジーパターンかファクトリーでメソッドを変えたい。
-  " ダレカ、ウツクシイカキカタ、タノム
-  let lang = alpaca_english#select_language()
-  execute 'let result = alpaca_english#'.lang.'#complete#do(a:cur_keyword_str)'
+  let result = alpaca_english#complete(a:cur_keyword_str)
 
   return result
 endfunction"}}}

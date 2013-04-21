@@ -34,13 +34,13 @@ function! s:initialize()
   let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 1)
   let g:alpaca_english_max_candidates  = get(g:, 'alpaca_english_max_candidates', 20)
   " とりあえずRubyだけ対応
-  let g:alpaca_english_module_settings = get(g:, 'alpaca_english_module_settings ',
-        \ {
-        \   'complete' : 'ruby',
-        \ })
-  if !exists('g:alpaca_english_db_path') && exists('g:neobundle#default_options')
-    let g:alpaca_english_db_path =
-        \ neobundle#get_neobundle_dir() . '/alpaca_english/db/ejdict.sqlite3'
+  if exists('g:neobundle#default_options')
+    let dir = neobundle#get_neobundle_dir()
+    let g:alpaca_english_db_path = get(g:, 'alpaca_english_db_path',
+          \ dir . '/alpaca_english/db/ejdict.sqlite3')
+    let g:alpaca_english_root_dir = get(g:, 'alpaca_english_root_dir',
+          \ dir . '/alpaca_english')
+
   endif
 endfunction "}}}
 
