@@ -14,15 +14,14 @@ function! s:source.finalize() "{{{
 endfunction "}}}
 
 function! s:source.get_keyword_list(cur_keyword_str) "{{{
-  if (exists('b:alpaca_english_enable') && !b:alpaca_english_enable)
-  " TODO 開発中だからいらね。
-  " \ !(neocomplcache#is_text_mode() || neocomplcache#within_comment())
+  if (exists('b:alpaca_english_enable') && !b:alpaca_english_enable) ||
+        \ !(neocomplcache#is_text_mode() || neocomplcache#within_comment())
         \ || a:cur_keyword_str !~ '^[[:alpha:]]\+$'
     return []
   endif
 
-  " XXX pythonとか環境によって変えたいから、ストラテジーパターンみたいにメソッ
-  " ドを変えたい。
+  " XXX pythonとか環境によって変えたいから、
+  " ストラテジーパターンかファクトリーでメソッドを変えたい。
   " ダレカ、ウツクシイカキカタ、タノム
   let lang = alpaca_english#select_language()
   execute 'let result = alpaca_english#'.lang.'#complete#do(a:cur_keyword_str)'

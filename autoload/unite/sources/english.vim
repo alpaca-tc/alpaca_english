@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: english for unite.vim
+" FILE: alpaca_english for unite.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
 " Last Modified: 2013-04-21
 " License: MIT license  {{{
@@ -27,29 +27,18 @@
 let s:name = 'english'
 let s:unite_source = {
       \ 'name': s:name,
-      \ 'description' : '',
-      \ 'hooks' : {},
-      \ "kind": "common",
-      \ 'default_action' : {},
+      \ 'description' : 'unite for lean to English',
+      \ "default_kind": "english",
+      \ 'is_volatile' : 1,
       \}
 
 function! s:unite_source.gather_candidates(args, context) "{{{
-  " if result == ""
-  "   return []
-  " endif
+  let lang = alpaca_english#select_language()
+  execute 'let result = alpaca_english#'.lang.'#unite#do(a:args, a:context)'
 
-  let result = {
-        \ "word": "hoge",
-        \ }
-
-  return [result]
+  return result
 endfunction"}}}
 
 function! unite#sources#english#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : []
 endfunction"}}}
-
-function! s:unite_source.hooks.on_syntax(args, context)
-endfunction
-
-

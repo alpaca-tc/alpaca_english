@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: alpaca_english.vim
+" FILE: english.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
 " Last Modified: 2013-04-21
 " License: MIT license  {{{
@@ -23,42 +23,70 @@
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
 "=============================================================================
-if exists('g:loaded_alpaca_english')
-  finish
-endif
-let g:loaded_alpaca_english = 1
-
-" initialize"{{{
-" Function for initializing "{{{
-function! s:initialize()
-  let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 1)
-  let g:alpaca_english_max_candidates  = get(g:, 'alpaca_english_max_candidates', 20)
-  " とりあえずRubyだけ対応
-  let g:alpaca_english_module_settings = get(g:, 'alpaca_english_module_settings ',
-        \ {
-        \   'complete' : 'ruby',
-        \ })
-  if !exists('g:alpaca_english_db_path') && exists('g:neobundle#default_options')
-    let g:alpaca_english_db_path =
-        \ neobundle#get_neobundle_dir() . '/alpaca_english/db/ejdict.sqlite3'
-  endif
-endfunction "}}}
-
-if get(g:, 'alpaca_english_enable', 0) "{{{
-  call s:initialize()
-else
-  let g:alpaca_english_enable = 0
-endif "}}}
-"}}}
-
-" define commands"{{{
-" XXX 今は動かないから。消す
-command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
-"}}}
 
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! unite#kinds#english#define() "{{{
+  return s:kind
+endfunction"}}}
+
+let s:kind = {
+      \ 'name' : 'english',
+      \ 'default_action' : 'echo',
+      \ 'action_table': {},
+      \}
+
+" Actions "{{{
+" debug {{{
+let s:kind.action_table.debug = {
+      \ 'description' : 'debug',
+      \ 'is_selectable' : 1,
+      \ }
+function! s:kind.action_table.debug.func(candidates)
+  echomsg string(a:candidates)
+endfunction
+"}}}
+
+" preview {{{
+let s:kind.action_table.preview = {
+      \ 'description' : 'preview word selected',
+      \ 'is_selectable' : 1,
+      \ }
+function! s:kind.action_table.preview.func(candidates)
+  for candidate in a:candidates
+    echo candidate["word"]
+    " FIXME 長い文字列が切れる。
+    echo candidate["unite__abbr"]
+  endfor
+endfunction
+"}}}
+
+" preview {{{
+let s:kind.action_table.marking = {
+      \ 'description' : 'marking',
+      \ 'is_selectable' : 1,
+      \ }
+function! s:kind.action_table.preview.func(candidates)
+  for candidate in a:candidates
+    let item_id = candidate.source__data["id"]
+    ruby << EOF
+    AlpacaEnglish.if_ruby_wrapper do
+      item_id = VIM.evaluate("item_id")
+      item = Item.find(item_id)
+      if item
+        item.mark.name = "1"
+        item.save
+      end
+    end
+EOF
+  endfor
+endfunction
+"}}}
+
+"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
-" vim:foldmethod=marker
+
+" vim: foldmethod=marker
