@@ -13,6 +13,20 @@ endfunction "}}}
 function! s:source.finalize() "{{{
 endfunction "}}}
 
+function! s:to_canditates(dict)
+  let res = []
+  for record in a:dict
+    let can = {
+          \ "word" : record[1],
+          \ "abbr" : record[1]. " ". record[2],
+          \ "menu" : "[EN]"
+          \ }
+    call add(res, can)
+  endfor
+
+  return res
+endfunction
+
 function! s:source.get_keyword_list(cur_keyword_str) "{{{
   if (exists('b:alpaca_english_enable') && !b:alpaca_english_enable) ||
         \ !(neocomplcache#is_text_mode() || neocomplcache#within_comment())
@@ -20,9 +34,9 @@ function! s:source.get_keyword_list(cur_keyword_str) "{{{
     return []
   endif
 
-  let result = alpaca_english#complete(a:cur_keyword_str)
+  let result = alpaca_english#get_record(a:cur_keyword_str)
 
-  return result
+  return s:to_canditates(result)
 endfunction"}}}
 
 function! neocomplcache#sources#english#define() "{{{
