@@ -1,7 +1,10 @@
-require 'rubygems'
+%w[active_record sqlite3 json].each do |gem|
+  VIM::message("Please install #{gem}.") unless require gem
+end
 require 'active_record'
 require 'sqlite3'
 require 'json'
+
 alp_require 'lib/alpaca_english/models'
 alp_require 'lib/alpaca_english/scheme'
 alp_require 'lib/alpaca_english/utils'
