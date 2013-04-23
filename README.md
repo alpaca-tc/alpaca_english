@@ -44,4 +44,7 @@ let g:neocomplcache_text_mode_filetypes = {
 ## 実装予定
 
 - Uniteを使った単語帳。
-    - 検索、記録、メモ、新規追加
+    - 検索(finished)
+    - 記録
+    - メモ
+    - 新規追加
