@@ -27,35 +27,28 @@ if exists('g:loaded_alpaca_english')
   finish
 endif
 let g:loaded_alpaca_english = 1
+let s:plugin_current_dir = expand("<sfile>:p:h:h")
+
+function! s:let(name, value)
+  execute "let " .a:name. " = exists('" .a:name. "') ? " . a:name ." : '" . a:value ."'"
+endfunction
 
 " initialize"{{{
 " Function for initializing "{{{
 function! s:initialize()
-  let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 1)
-  let g:alpaca_english_max_candidates  = get(g:, 'alpaca_english_max_candidates', 20)
-  " とりあえずRubyだけ対応
-  if exists('g:neobundle#default_options')
-    let dir = neobundle#get_neobundle_dir()
-    let g:alpaca_english_db_path = get(g:, 'alpaca_english_db_path',
-          \ dir . '/alpaca_english/db/ejdict.sqlite3')
-    let g:alpaca_english_root_dir = get(g:, 'alpaca_english_root_dir',
-          \ dir . '/alpaca_english')
-
-  endif
+  call s:let('g:alpaca_english_enable', 1)
+  call s:let('g:alpaca_english_max_candidates', 20)
+  call s:let('g:alpaca_english_db_path',  s:plugin_current_dir . '/db/ejdict.sqlite3')
 endfunction "}}}
 
-if get(g:, 'alpaca_english_enable', 0) "{{{
-  call s:initialize()
-else
-  let g:alpaca_english_enable = 0
-endif "}}}
-"}}}
+let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 0) 
 
-" define commands"{{{
-" XXX 今は動かないから。消す
-command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
-command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
-"}}}
+if g:alpaca_english_enable
+  call s:initialize()
+  command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
+  command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
+endif
+
 
 let s:save_cpo = &cpo
 set cpo&vim
