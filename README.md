@@ -8,7 +8,13 @@ OSS開発で外人とチャットするけど難しい、そんな人(僕)用の
 completefuncで英単語を補完します。僕は英語力が弱いので、日本語訳も一緒に欲しいなとずっと思ってました。
 SQLite補完なので、爆速です。
 
+The English complete
+
 ![english補完](http://cl.ly/image/1l1l0g272I1N/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202013-04-21%208.37.39.png)
+
+Unite english
+
+![Unite english](http://cl.ly/image/3n2u0Z2b0v3S/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202013-04-23%2023.38.24.png)
 
 ## How to install
 
@@ -24,7 +30,9 @@ gem:sqlite3
 ### vimrc
 
 ```vim
-NeoBundle 'taichouchou2/alpaca_english'
+NeoBundle 'taichouchou2/alpaca_english', {
+    \ 'rev' : 'development',
+    \ }
 
 let g:alpaca_english_enable=1
 
