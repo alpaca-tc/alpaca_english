@@ -54,6 +54,7 @@ endif "}}}
 " define commands"{{{
 " XXX 今は動かないから。消す
 command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
+command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
 "}}}
 
 let s:save_cpo = &cpo

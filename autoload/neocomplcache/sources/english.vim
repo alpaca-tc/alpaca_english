@@ -28,7 +28,8 @@ function! s:to_canditates(dict)
 endfunction
 
 function! s:source.get_keyword_list(cur_keyword_str) "{{{
-  if (exists('b:alpaca_english_enable') && !b:alpaca_english_enable) ||
+  if (exists('b:alpaca_english_enable') ) ?
+        \ !b:alpaca_english_enable :
         \ !(neocomplcache#is_text_mode() || neocomplcache#within_comment())
         \ || a:cur_keyword_str !~ '^[[:alpha:]]\+$'
     return []
