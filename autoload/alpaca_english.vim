@@ -1,13 +1,5 @@
 let s:alpaca_english_last_result = []
 
-function! alpaca_english#is_active() "{{{
-  return has('ruby') && exists('g:alpaca_english_db_path') && g:alpaca_english_enable
-endfunction"}}}
-
-function! alpaca_english#print_error(string) "{{{
-  echohl Error | echomsg a:string | echohl None
-endfunction"}}}
-
 function! s:initialize() "{{{
   if exists('s:initialized')
     return 0
@@ -22,8 +14,9 @@ function! s:initialize() "{{{
   module VIM #{{{
     # escape ruby object
     def self.let(name, value)
-      parsed = value.to_json
-      ::VIM.command("let #{name} = #{parsed}")
+      enc = evaluate("&encoding")
+      parsed = value.to_json.to_s.encode(enc)
+      command("let #{name} = #{parsed}")
     end
   end #}}}
 
@@ -105,6 +98,14 @@ function! s:initialize() "{{{
 EOF
 endfunction"}}}
 
+function! alpaca_english#is_active() "{{{
+  return has('ruby') && exists('g:alpaca_english_db_path')
+endfunction"}}}
+
+function! alpaca_english#print_error(string) "{{{
+  echohl Error | echomsg a:string | echohl None
+endfunction"}}}
+
 function! alpaca_english#get_record(cur_keyword_str) "{{{
   call s:initialize()
 
@@ -119,11 +120,24 @@ function! alpaca_english#get_record(cur_keyword_str) "{{{
     res = db.execute(sql)
     db.close
 
-    VIM.command("let s:complete = #{res.to_json}")
+    VIM.let("s:complete", res)
   end
 EOF
 
   return s:complete
+endfunction"}}}
+
+function! alpaca_english#completefunc(findstart, base) "{{{
+  if a:findstart
+    let [line, start] = [getline('.'), col('.') - 1]
+    while start > 0 && line[start - 1] =~ '\a'
+      let start -= 1
+    endwhile
+    return start
+  endif
+  return {"words": map(
+  \  alpaca_english#get_record(a:base),
+  \ '{"word": v:val[1], "abbr": v:val[1].": ".v:val[2], "info": v:val[3]}'), "refresh": "always"}
 endfunction"}}}
 
 function! alpaca_english#search_with_complex_conditions(args, context) "{{{

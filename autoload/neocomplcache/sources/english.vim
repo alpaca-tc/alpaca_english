@@ -13,7 +13,7 @@ endfunction "}}}
 function! s:source.finalize() "{{{
 endfunction "}}}
 
-function! s:to_canditates(dict)
+function! s:to_canditates(dict) "{{{
   let res = []
   for record in a:dict
     let can = {
@@ -25,7 +25,7 @@ function! s:to_canditates(dict)
   endfor
 
   return res
-endfunction
+endfunction"}}}
 
 function! s:source.get_keyword_list(cur_keyword_str) "{{{
   if (exists('b:alpaca_english_enable') ) ?

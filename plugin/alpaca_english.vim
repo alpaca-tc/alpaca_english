@@ -27,28 +27,20 @@ if exists('g:loaded_alpaca_english')
   finish
 endif
 let g:loaded_alpaca_english = 1
-let s:plugin_current_dir = expand("<sfile>:p:h:h")
 
-function! s:let(name, value)
-  execute "let " .a:name. " = exists('" .a:name. "') ? " . a:name ." : '" . a:value ."'"
-endfunction
 
-" initialize"{{{
-" Function for initializing "{{{
-function! s:initialize()
-  call s:let('g:alpaca_english_enable', 1)
-  call s:let('g:alpaca_english_max_candidates', 20)
-  call s:let('g:alpaca_english_db_path',  s:plugin_current_dir . '/db/ejdict.sqlite3')
-endfunction "}}}
+function! s:let(name, value) "{{{
+  let value = type(a:value) == type("") ? "'".a:value. "'" : a:value
+  execute "let " .a:name. " = exists('" .a:name. "') ? " . a:name ." : " . value
+endfunction"}}}
 
-let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 0) 
+let s:plugin_root_dir = expand("<sfile>:p:h:h")
+call s:let('g:alpaca_english_enable', 0)
+call s:let('g:alpaca_english_max_candidates', 20)
+call s:let('g:alpaca_english_db_path',  s:plugin_root_dir . '/db/ejdict.sqlite3')
 
-if g:alpaca_english_enable
-  call s:initialize()
-  command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
-  command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
-endif
-
+command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
+command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
 
 let s:save_cpo = &cpo
 set cpo&vim
