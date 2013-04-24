@@ -75,7 +75,7 @@ function! s:unite_source.gather_candidates(args, context)
   if input =~ '^\s*$'
     return s:get_dummy_candidates()
   else
-    let res = alpaca_english#search_with_complex_conditions(a:args, a:context)
+    let res = alpaca_english#sqlite#search_with_complex_conditions(a:args, a:context)
     return empty(res) ? res : s:to_canditates(res)
   endif
 endfunction

@@ -35,7 +35,7 @@ function! s:source.get_keyword_list(cur_keyword_str) "{{{
     return []
   endif
 
-  let result = alpaca_english#get_record(a:cur_keyword_str)
+  let result = alpaca_english#sqlite#get_record(a:cur_keyword_str)
 
   return s:to_canditates(result)
 endfunction"}}}
