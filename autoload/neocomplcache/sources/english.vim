@@ -19,7 +19,9 @@ function! s:to_canditates(dict) "{{{
     let can = {
           \ "word" : record[1],
           \ "abbr" : record[1]. " ". record[2],
-          \ "menu" : "[EN]"
+          \ "menu" : "[EN]",
+          \ "dup" : g:alpaca_english_enable_duplicate_candidates,
+          \ "info": record[2],
           \ }
     call add(res, can)
   endfor
