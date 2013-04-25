@@ -37,3 +37,22 @@ endfunction"}}}
 function! alpaca_english#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None
 endfunction"}}}
+
+function! s:exists_vimproc() "{{{
+  if !exists('s:exists_vimproc')
+    try
+      call vimproc#version()
+    catch
+    endtry
+
+    let s:exists_vimproc =
+          \ (exists('g:vimproc_dll_path') && filereadable(g:vimproc_dll_path))
+          \ || (exists('g:vimproc#dll_path') && filereadable(g:vimproc#dll_path))
+  endif
+
+  return s:exists_vimproc
+endfunction"}}}
+
+function! alpaca_english#system(commands) "{{{
+  return s:exists_vimproc() ? vimproc#system_bg(a:commands) : system(commands)
+endfunction"}}}

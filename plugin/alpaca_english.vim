@@ -42,6 +42,9 @@ call s:let('g:alpaca_english_enable_duplicate_candidates', 0)
 
 command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
 command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
+" if has('mac')
+  command! -range AlpacaEnglishSay :<line1>,<line2> call say#run()
+" endif
 
 let s:save_cpo = &cpo
 set cpo&vim
