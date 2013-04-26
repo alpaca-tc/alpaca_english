@@ -27,6 +27,32 @@ function! s:initialize() "{{{
     end
   end #}}}
 
+  class String #{{{
+    def is_japanese?
+      !self.is_english?
+    end
+
+    def is_english?
+      self.match(/[ぁ-んァ-ヴ一-龠亜-煕]/).nil?
+    end
+
+    def is_head?
+      self[0] == '^'
+    end
+
+    def is_tail?
+      self[-1] == '$'
+    end
+
+    def is_or?
+      self[0] == '|'
+    end
+
+    def loose_empty?
+      !self.match(/^\s*$/).nil?
+    end
+  end #}}}
+
   module AlpacaEnglish #{{{
     module DB # {{{
       def self.db #{{{
@@ -45,17 +71,18 @@ function! s:initialize() "{{{
         splited.each do |text|
           # 不要な文字を削除
           word = text.gsub(/[$|! ]/, "")
+
           # 空なら処理しない
-          next if word.match(/^\s*$/)
+          next if word.loose_empty?
 
           # and なのか orなのか
-          conditions = if text == splited.first || text.match(/^\|/) then
+          conditions = if text == splited.first || text.is_or? then
                          or_conditions
                        else
                          and_conditions
                        end
 
-          conditions << if text =~ /[ぁ-んァ-ヴ一-龠亜-煕]/
+          conditions << if text.is_japanese?
             "mean like '%#{word}%'"
           else
             "word like '#{word}%'"
