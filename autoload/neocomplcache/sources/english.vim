@@ -46,4 +46,19 @@ function! neocomplcache#sources#english#define() "{{{
   return alpaca_english#is_active() ? s:source : {}
 endfunction"}}}
 
+" thanks mattn!
+function! neocomplcache#sources#english#completefunc(findstart, base) "{{{
+  if a:findstart
+    let [line, start] = [getline('.'), col('.') - 1]
+    while start > 0 && line[start - 1] =~ '\a'
+      let start -= 1
+    endwhile
+    return start
+  endif
+
+  return {"words": map(
+        \  alpaca_english#get_record(a:base),
+        \ '{"word": v:val[1], "abbr": v:val[1].": ".v:val[2], "info": v:val[3]}'), "refresh": "always"}
+endfunction"}}}
+
 " vim: foldmethod=marker

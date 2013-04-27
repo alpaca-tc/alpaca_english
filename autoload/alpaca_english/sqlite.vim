@@ -98,6 +98,21 @@ function! s:initialize() "{{{
         "where #{conditions.join(" ")}"
       end #}}}
     end #}}}
+
+    module Completion #{{{
+      def self.complete_thesaurus(file_path, filter, max=100)
+        file = File.new(file_path, "r")
+        result = []
+        file.each_line do |line|
+          line.strip!
+          result.concat(line.split(/[, ]/)).uniq! if line.match filter
+          break if result.length > max
+        end
+        file.close
+
+        result
+      end
+    end #}}}
   end #}}}
 EOF
 endfunction"}}}
@@ -153,4 +168,37 @@ EOF
     call alpaca_english#print_error("error occured")
     return []
   endtry
+endfunction"}}}
+
+function! alpaca_english#sqlite#search_thesaurus_word(word) "{{{
+  if g:alpaca_english_thesaurus_file == ""
+    call alpaca_english#print_error("g:alpaca_english_thesaurus_file is empty")
+    return []
+  endif
+
+  if empty(a:word)
+    return []
+  endif
+
+  call s:initialize()
+  let s:thesaurus_cache = get(s:, 'thesaurus_cache', {})
+
+  if has_key(s:thesaurus_cache, a:word)
+    return s:thesaurus_cache[a:word]
+  endif
+
+  ruby << EOF
+  AlpacaEnglish.run do
+    word = VIM.evaluate("a:word")
+    file_path = VIM.evaluate("g:alpaca_english_thesaurus_file")
+    max = VIM.evaluate("g:alpaca_english_max_candidates")
+    thesaurus_words = AlpacaEnglish::Completion.complete_thesaurus(file_path, word, max)
+    thesaurus_words ||= []
+    VIM.let("complete", thesaurus_words)
+  end
+EOF
+
+  let s:thesaurus_cache[a:word] = map(complete, '{ "word": v:val }')
+
+  return s:thesaurus_cache[a:word]
 endfunction"}}}

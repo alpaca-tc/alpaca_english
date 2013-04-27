@@ -28,7 +28,6 @@ if exists('g:loaded_alpaca_english')
 endif
 let g:loaded_alpaca_english = 1
 
-
 function! s:let(name, value) "{{{
   let value = type(a:value) == type("") ? "'".a:value. "'" : a:value
   execute "let " .a:name. " = exists('" .a:name. "') ? " . a:name ." : " . value
@@ -39,12 +38,13 @@ call s:let('g:alpaca_english_enable', 0)
 call s:let('g:alpaca_english_max_candidates', 20)
 call s:let('g:alpaca_english_db_path',  s:plugin_root_dir . '/db/ejdict.sqlite3')
 call s:let('g:alpaca_english_enable_duplicate_candidates', 0)
+call s:let('g:alpaca_english_thesaurus_file', split(&thesaurus, ",")[0])
 
 command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
 command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
-" if has('mac')
+if has('mac')
   command! -range AlpacaEnglishSay :<line1>,<line2> call say#run()
-" endif
+endif
 
 let s:save_cpo = &cpo
 set cpo&vim
