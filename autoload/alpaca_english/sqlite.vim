@@ -171,34 +171,13 @@ EOF
 endfunction"}}}
 
 function! alpaca_english#sqlite#search_thesaurus_word(word) "{{{
-  if g:alpaca_english_thesaurus_file == ""
-    call alpaca_english#print_error("g:alpaca_english_thesaurus_file is empty")
-    return []
-  endif
-
-  if empty(a:word)
-    return []
-  endif
-
   call s:initialize()
-  let s:thesaurus_cache = get(s:, 'thesaurus_cache', {})
+  let word_list = alpaca_english#thesaurus#search_word(a:word)
+  call insert(word_list, a:word)
 
-  if has_key(s:thesaurus_cache, a:word)
-    return s:thesaurus_cache[a:word]
-  endif
+  " 配列を、全てor( |)で繋ぐ
+  let word_input = join(map(word_list, '"|".v:val'), " ")
 
-  ruby << EOF
-  AlpacaEnglish.run do
-    word = VIM.evaluate("a:word")
-    file_path = VIM.evaluate("g:alpaca_english_thesaurus_file")
-    max = VIM.evaluate("g:alpaca_english_max_candidates")
-    thesaurus_words = AlpacaEnglish::Completion.complete_thesaurus(file_path, word, max)
-    thesaurus_words ||= []
-    VIM.let("complete", thesaurus_words)
-  end
-EOF
-
-  let s:thesaurus_cache[a:word] = map(complete, '{ "word": v:val }')
-
-  return s:thesaurus_cache[a:word]
+  " 無理矢理送る
+  return unite#sources#english#search_by_input(word_input)
 endfunction"}}}

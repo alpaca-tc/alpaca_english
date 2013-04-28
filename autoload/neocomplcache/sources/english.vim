@@ -57,7 +57,7 @@ function! neocomplcache#sources#english#completefunc(findstart, base) "{{{
   endif
 
   return {"words": map(
-        \  alpaca_english#get_record(a:base),
+        \  alpaca_english#sqlite#get_record(a:base),
         \ '{"word": v:val[1], "abbr": v:val[1].": ".v:val[2], "info": v:val[3]}'), "refresh": "always"}
 endfunction"}}}
 
