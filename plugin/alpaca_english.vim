@@ -38,7 +38,9 @@ call s:let('g:alpaca_english_enable', 0)
 call s:let('g:alpaca_english_max_candidates', 20)
 call s:let('g:alpaca_english_db_path',  s:plugin_root_dir . '/db/ejdict.sqlite3')
 call s:let('g:alpaca_english_enable_duplicate_candidates', 0)
-call s:let('g:alpaca_english_thesaurus_file', split(&thesaurus, ",")[0])
+if !empty(&thesaurus) 
+  call s:let('g:alpaca_english_thesaurus_file', split(&thesaurus, ",")[0])
+endif
 
 command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
 command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
