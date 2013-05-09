@@ -1,8 +1,10 @@
 " say.vim: A vim plugin by Koichiro Wada (wadako111@gmail.com)
 " escape exclamation mark (!)
 function! s:escape(str)
-  let str = substitute(a:str, '[!"]', ".", "g")
-  let str = substitute(str, "#", " hash ", "g")
+  let str = a:str
+  for [target, replace] in items(g:alpaca_english_say_ignore_char)
+    let str = substitute(str, target, replace, "g")
+  endfor
 
   return str
 endfunction
