@@ -23,7 +23,7 @@ Unite english
 vim
 ======
 vim: +ruby +ruby/dry
-ruby: < 1.9.7
+ruby: 2.0.0
 gem: json, sqlite3
 
 `:ruby p RUBY_DESCRIPTION`でRubyのバージョンを確認出来ます
@@ -31,8 +31,13 @@ gem: json, sqlite3
 ### vimrc
 
 ```vim
-NeoBundle 'taichouchou2/alpaca_english', {
+NeoBundleLazy 'taichouchou2/alpaca_english', {
     \ 'rev' : 'development',
+    \ 'autoload' : {
+    \   'insert': 1,
+    \   'commands' : ["AlpacaEnglishDisable", "AlpacaEnglishEnable", "AlpacaEnglishSay"],
+    \   'unite_sources': 'english',
+    \ }
     \ }
 
 let g:alpaca_english_enable=1
@@ -45,12 +50,17 @@ let g:neocomplcache_text_mode_filetypes = {
   \ }
 ```
 
+### bundler
+
+このREADMEがあるディレクトリにて`bundle`を実行してください。
+`bundle`が無い場合は、`gem install bundler`で先にインストールしてください。
+
 ## 実装予定
 
 - 英単語の動的補完(日本語訳つき)(finished)
 - 英単語の読み上げ(Mac Only)(finished)
 - Uniteを使った単語帳。
-    - 検索(finished)
+    - 検索(日本語、英語両方可能)(finished)
     - 記録
     - メモ
     - 新規追加
