@@ -1,15 +1,15 @@
 " say.vim: A vim plugin by Koichiro Wada (wadako111@gmail.com)
 " escape exclamation mark (!)
-function! s:escape(str)
+function! s:escape(str) "{{{
   let str = a:str
   for [target, replace] in items(g:alpaca_english_say_ignore_char)
     let str = substitute(str, target, replace, "g")
   endfor
 
   return str
-endfunction
+endfunction"}}}
 
-function! say#run() range
+function! say#run() range "{{{
   let content = []
   call map(range(a:firstline, a:lastline), 'add(content, getline(v:val))')
   let str = s:escape(join(content, ". "))
@@ -19,4 +19,4 @@ function! say#run() range
   endif
 
   call alpaca_english#system(["say", '"', str, '"'])
-endfunction
+endfunction"}}}
