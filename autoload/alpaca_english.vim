@@ -4,10 +4,11 @@ function! alpaca_english#initialize() "{{{
   endif
   let s:initialized = 1
 
-  ruby << EOF
-  require 'json'
-  require 'sqlite3'
+  if !alpaca_english#depend#test()
+    return 0
+  endif
 
+  ruby << EOF
   module VIM #{{{
     # escape ruby object
     def self.let(name, value)
@@ -31,7 +32,11 @@ EOF
 endfunction"}}}
 
 function! alpaca_english#is_active() "{{{
-  return has('ruby') && exists('g:alpaca_english_db_path')
+  if !exists("alpaca_english#enable")
+    let alpaca_english#enable = 1
+  endif
+
+  return has('ruby') && exists('g:alpaca_english_db_path') && alpaca_english#enable
 endfunction"}}}
 
 function! alpaca_english#print_error(string) "{{{
