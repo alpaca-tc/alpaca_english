@@ -1,33 +1,16 @@
+let g:alpaca_english#debug = {}
+
 function! alpaca_english#initialize() "{{{
   if exists('s:initialized')
     return 0
   endif
   let s:initialized = 1
 
-  if !alpaca_english#depend#test()
-    return 0
-  endif
-
   ruby << EOF
-  module VIM #{{{
-    # escape ruby object
-    def self.let(name, value)
-      enc = evaluate("&encoding")
-      parsed = value.to_json.to_s.encode(enc)
-      command("let #{name} = #{parsed}")
-    end
-  end #}}}
-
-  module AlpacaEnglish #{{{
-    def self.run #{{{
-      # TODO instance_evalの形に出来ないかな。
-      begin
-        yield
-      rescue => e
-        VIM::message("error occurd. #{e.inspect}")
-      end
-    end #}}}
-  end #}}}
+  plugin_root_path = VIM.evaluate("g:alpaca_english_plugin_root_dir")
+  require_path = File.expand_path("#{plugin_root_path}/lib/alpaca_english.rb")
+  require require_path
+  VIM.debug("hoge")
 EOF
 endfunction"}}}
 
