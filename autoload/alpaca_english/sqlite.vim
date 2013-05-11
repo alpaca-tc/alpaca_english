@@ -1,16 +1,5 @@
-function! s:initialize() "{{{
-  if exists('s:initialized')
-    return 0
-  endif
-
-  let s:initialized = 1
-
-  call alpaca_english#initialize()
-
-endfunction"}}}
-
 function! alpaca_english#sqlite#get_record(cur_keyword_str) "{{{
-  call s:initialize()
+  call alpaca_english#initialize()
 
   ruby << EOF
   AlpacaEnglish.run do
@@ -31,7 +20,7 @@ EOF
 endfunction"}}}
 
 function! alpaca_english#sqlite#search_with_complex_conditions(args, context) "{{{
-  call s:initialize()
+  call alpaca_english#initialize()
   let input = a:context["input"]
 
   try
@@ -63,7 +52,7 @@ EOF
 endfunction"}}}
 
 function! alpaca_english#sqlite#search_thesaurus_word(word) "{{{
-  call s:initialize()
+  call alpaca_english#initialize()
   let word_list = alpaca_english#thesaurus#search_word(a:word)
   call insert(word_list, a:word)
 
