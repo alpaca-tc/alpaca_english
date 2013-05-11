@@ -23,11 +23,12 @@ module AlpacaEnglish
                        and_conditions
                      end
 
-        conditions << if text.is_japanese?
-                        "mean like '%#{word}%'"
-        else
-          "word like '#{word}%'"
-        end
+        VIM.debug(word)
+        conditions << if text.is_japanese? then
+                      "mean like '%#{word}%'"
+                    else
+                      "word like '#{word}%'"
+                    end
       end
 
       conditions = []

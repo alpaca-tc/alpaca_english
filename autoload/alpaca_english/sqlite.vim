@@ -3,7 +3,7 @@ function! alpaca_english#sqlite#get_record(cur_keyword_str) "{{{
 
   ruby << EOF
   AlpacaEnglish.run do
-    input = VIM.evaluate("a:cur_keyword_str")
+    input = VIM.get("a:cur_keyword_str")
     res = AlpacaEnglish::Completion.complete_english(input)
     VIM.let("s:complete", res)
   end
@@ -16,10 +16,11 @@ function! alpaca_english#sqlite#search_with_complex_conditions(args, context) "{
   call alpaca_english#initialize()
   let input = a:context["input"]
 
+  echo input
   try
     ruby <<EOF
     AlpacaEnglish.run do
-      input = VIM.evaluate("input")
+      input = VIM.get("input")
       result = AlpacaEnglish::Unite.search_with_complex_conditions(input)
       VIM.let("conditions", result)
     end
