@@ -7,6 +7,9 @@ module AlpacaEnglish
       or_conditions = []
 
       splited.each do |text|
+        # extend method for unite
+        text.to_unite!
+
         # 不要な文字を削除
         word = text.gsub(/[$|! ]/, "")
 

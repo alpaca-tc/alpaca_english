@@ -1,4 +1,18 @@
-class String #{{{
+class String
+  def to_unite!
+    self.instance_eval do
+      extend ExtendForUniteString
+    end
+
+    self
+  end
+
+  def loose_empty?
+    !self.match(/^\s*$/).nil?
+  end
+end
+
+module ExtendForUniteString
   def is_japanese?
     !self.is_english?
   end
@@ -19,8 +33,4 @@ class String #{{{
   def is_or?
     self[0] == '|'
   end
-
-  def loose_empty?
-    !self.match(/^\s*$/).nil?
-  end
-end #}}}
+end

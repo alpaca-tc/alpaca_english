@@ -3,8 +3,8 @@ require "sqlite3"
 
 lib_root_path = File.expand_path(File.dirname(__FILE__))
 require "#{lib_root_path}/vim.rb"
-require "#{lib_root_path}/sqlite.rb"
-require "#{lib_root_path}/string.rb"
+require "#{lib_root_path}/sqlite/sqlite.rb"
+require "#{lib_root_path}/core_ext/string.rb"
 
 module AlpacaEnglish #{{{
   def self.run #{{{
