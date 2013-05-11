@@ -1,5 +1,7 @@
 # AlpacaEnglish
 
+## About me
+
 このプラグインは英語を話したいけど、話せない!!
 OSS開発で外人とチャットするけど難しい、そんな人(僕)用のプラグインです。
 
@@ -22,8 +24,7 @@ vim
 ======
 vim: +ruby +ruby/dry
 ruby: < 1.9.7
-gem:sqlite3
-他, sqlite3
+gem: json, sqlite3
 
 `:ruby p RUBY_DESCRIPTION`でRubyのバージョンを確認出来ます
 
@@ -36,9 +37,6 @@ NeoBundle 'taichouchou2/alpaca_english', {
 
 let g:alpaca_english_enable=1
 
-" NeoBundleの場合は不要
-let g:alpaca_english_db_path='/path/to/alpaca_english/db/ejdict.sqlite3'
-
 " 補完を有効にするファイルタイプを追加
 let g:neocomplcache_text_mode_filetypes = {
   \ 'markdown' : 1,
@@ -47,10 +45,10 @@ let g:neocomplcache_text_mode_filetypes = {
   \ }
 ```
 
-`echo alpaca_english#get_record("word")`でJSONが返ってこればOKです。
-
 ## 実装予定
 
+- 英単語の動的補完(日本語訳つき)(finished)
+- 英単語の読み上げ(Mac Only)(finished)
 - Uniteを使った単語帳。
     - 検索(finished)
     - 記録
