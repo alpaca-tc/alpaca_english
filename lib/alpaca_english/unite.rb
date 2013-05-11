@@ -38,5 +38,13 @@ module AlpacaEnglish
 
       "where #{conditions.join(" ")}"
     end #}}}
+
+    def self.search_with_complex_conditions(input)# {{{
+      sql_opt = []
+      sql_opt << parse_input(input)
+      sql = "select * from items #{sql_opt.flatten.join(" ")}"
+
+      AlpacaEnglish::DB.execute(sql) # result
+    end# }}}
   end #}}}
 end

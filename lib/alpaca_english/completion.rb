@@ -12,5 +12,13 @@ module AlpacaEnglish
 
       result
     end
+
+    def self.complete_english(input)
+      sql_opt = "where word like '#{input}%'"
+      sql = "select * from items #{sql_opt}"
+      res = AlpacaEnglish::DB.execute(sql)
+
+      res
+    end
   end #}}}
 end

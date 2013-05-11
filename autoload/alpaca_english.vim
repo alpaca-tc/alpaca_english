@@ -10,7 +10,6 @@ function! alpaca_english#initialize() "{{{
   plugin_root_path = VIM.evaluate("g:alpaca_english_plugin_root_dir")
   lib_path = File.expand_path("#{plugin_root_path}/lib")
   require "#{lib_path}/alpaca_english.rb"
-  VIM.debug("hoge")
 EOF
 endfunction"}}}
 
