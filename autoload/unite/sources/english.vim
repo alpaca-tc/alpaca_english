@@ -49,6 +49,8 @@ function! s:to_canditates(dict) "{{{
     let can = {
           \ "word" : record[1]. " " . record[2],
           \ "abbr" : record[1]. " " . record[2],
+          \ "__sql_value_word" : record[1],
+          \ "__sql_value_mean" : record[2],
           \ }
     call add(res, can)
   endfor
