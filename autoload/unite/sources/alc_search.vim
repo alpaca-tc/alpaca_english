@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: example.vim
+" FILE: alc_search.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
 " Last Modified: 2013-05-12
 " License: MIT license  {{{
@@ -24,8 +24,8 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'example',
-      \ 'description' : 'show example',
+      \ 'name': 'alc_search',
+      \ 'description' : 'show alc_search',
       \}
 
 function! s:to_canditates(result) "{{{
@@ -51,31 +51,8 @@ function! s:unite_source.gather_candidates(args, context) "{{{
 
   " TODO リファクタリング
   ruby << EOF
-  require 'mechanize'
-
   word = VIM.get("input")
-  condition = if word.match(/^[a-zA-Z]+$/) then
-                %w[qotCE qotCJ]
-              else
-                %w[qotCJJ qotCJE]
-              end
-
-  agent = Mechanize.new
-  page = agent.get("http://ejje.weblio.jp/sentence/content/#{word}")
-  example_list = page.search(%q!//div[@class='kiji']/div[@class='qotC']!)
-
-  complete = []
-  example_list.each do |example|
-    res = {}
-    res["example"] = example.search(%Q!p[@class='#{condition[0]}']!).first.text.split("\n")[0]
-    mean_text = example.search(%Q!p[@class='#{condition[1]}']!).first.text.split("\n")[0]
-    mean_array = mean_text.split("-")
-    # mean_array = mean_text.split(" - ")
-    res["transrate"] = mean_array.first.chomp
-    res["dict"] = mean_array.last.chomp
-    complete << res
-  end
-
+  complete = AlpacaEnglish::Unite.alc_search(word)
   VIM.let("result", complete)
 EOF
 
@@ -86,7 +63,7 @@ EOF
   endif
 endfunction"}}}
 
-function! unite#sources#example#define() "{{{
+function! unite#sources#alc_search#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : {}
 endfunction"}}}
 "}}}

@@ -1,3 +1,4 @@
+require 'mechanize'
 module AlpacaEnglish
   module Unite #{{{
     # TODO リファクタリング
@@ -46,6 +47,25 @@ module AlpacaEnglish
       sql = "select * from items #{sql_opt.flatten.join(" ")}"
 
       AlpacaEnglish::DB.execute(sql) # result
+    end# }}}
+
+    def self.alc_search(word) # {{{
+      agent = ::Mechanize.new
+      page = agent.get("http://eow.alc.co.jp/#{word}/UTF-8/")
+      list = page.search("div[@id='resultsList']/ul/li")
+
+      complete = []
+      list.each do |element|
+        res = {}
+        element_array = element.text.split("\n").map { |s| s.chomp }
+        element_array.delete_if { |s| s.empty? }
+        res["example"] = element_array[0]
+        res["transrate"] = element_array[1,element_array.length - 1].join("")
+
+        complete << res
+      end
+
+      complete
     end# }}}
   end #}}}
 end
