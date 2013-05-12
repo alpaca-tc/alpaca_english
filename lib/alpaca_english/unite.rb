@@ -67,5 +67,8 @@ module AlpacaEnglish
 
       complete
     end# }}}
+
+    def self.thesaurus_search(word)
+    end
   end #}}}
 end
