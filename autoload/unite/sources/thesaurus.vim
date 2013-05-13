@@ -24,7 +24,7 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'english/thesaurus',
+      \ 'name': 'thesaurus',
       \ 'description' : 'show thesaurus',
       \}
 

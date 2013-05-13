@@ -24,7 +24,7 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'english/example',
+      \ 'name': 'example',
       \ 'hooks' : {},
       \ 'syntax' : 'uniteSource__Output',
       \ 'description' : 'show example',

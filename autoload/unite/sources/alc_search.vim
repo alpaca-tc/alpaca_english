@@ -24,9 +24,9 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'english/alc',
+      \ 'name': 'alc_search',
       \ 'description' : 'show alc_search',
-      \ }
+      \}
 
 function! s:to_canditates(result) "{{{
   let canditates = []
