@@ -43,11 +43,7 @@ endfunction"}}}
 
 function! s:unite_source.gather_candidates(args, context) "{{{
   call alpaca_english#initialize()
-  if empty(a:context["input"])
-    let a:context["input"] = input("input text -> ")
-  endif
-
-  let input = a:context["input"]
+  let input = unite#english_util#get_input(a:context)
 
   " TODO リファクタリング
   ruby << EOF

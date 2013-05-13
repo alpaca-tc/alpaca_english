@@ -71,6 +71,10 @@ g:alpaca_english_say_ignore_char		*g:alpaca_english_say_ignore_char*
 	\ }
 	)
 
+g:alpaca_english_use_cursor_word		*g:alpaca_english_use_cursor_word*
+	If set to 1, when to use unite and input is empty,	       use use cursor word as alternate
+	(default:1)
+
 g:alpaca_english_web_search_url			*g:alpaca_english_web_search_url*
 	DEVELOPMENT VERSION
 

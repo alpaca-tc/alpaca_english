@@ -44,6 +44,7 @@ call s:let('g:alpaca_english_say_ignore_char', {
       \ "#" : " number ",
       \ '["=>]' : '',
       \ })
+call s:let('g:alpaca_english_use_cursor_word', 1)
 call s:let('g:alpaca_english_web_search_url', '')
 call s:let('g:alpaca_english_web_search_xpath', '')
 
