@@ -35,6 +35,8 @@ function! s:to_canditates(result) "{{{
   for can in a:result
     let candidate = {
           \ "word" : can["example"] . "\n" . can["transrate"],
+          \ "__unite_english" : can["example"],
+          \ "__unite_transrate" : can["transrate"],
           \ "is_multiline" : 1,
           \ }
     call add(canditates, candidate)
@@ -85,10 +87,7 @@ EOF
 endfunction"}}}
 
 function! s:unite_source.hooks.on_syntax(args, context) "{{{
-  let g:hoge_s = "aaa"
-  syntax match uniteSource__alpaca_english_example_japanese /access/ containedin=uniteCandidateAbbr contained
-
-  highlight default link uniteSource__alpaca_english_example_japanese Number
+  " TODO
 endfunction"}}}
 
 function! unite#sources#english_example#define() "{{{

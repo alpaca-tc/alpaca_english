@@ -33,6 +33,8 @@ function! s:to_canditates(result) "{{{
   for can in a:result
     let candidate = {
           \ "word" : can["example"] . "\n" . can["transrate"],
+          \ "__unite_example" : can["example"],
+          \ "__unite_transrate" : can["transrate"],
           \ "is_multiline" : 1,
           \ }
     call add(canditates, candidate)

@@ -34,7 +34,9 @@ function! s:to_canditates(result) "{{{
     let candidate = {
           \ "word" : can["english"] . "\n" . can["transrate"] . "\n" . join(can["thesaurus"], ", "),
           \ "is_multiline" : 1,
-          \ "__unite_thesaurus": can["thesaurus"]
+          \ "__unite_english" : can["english"],
+          \ "__unite_transrate": can["transrate"],
+          \ "__unite_thesaurus": can["thesaurus"],
           \ }
     call add(canditates, candidate)
   endfor
