@@ -1,0 +1,145 @@
+*alpaca_english.txt*		alpaca_english.vim: alpaca_english client for Vim
+
+"=============================================================================
+" FILE: alpaca_english
+" AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
+" Last Modified: 2013-05-13
+" License: MIT license  {{{
+"     Permission is hereby granted, free of charge, to any person obtaining
+"     a copy of this software and associated documentation files (the
+"     "Software"), to deal in the Software without restriction, including
+"     without limitation the rights to use, copy, modify, merge, publish,
+"     distribute, sublicense, and/or sell copies of the Software, and to
+"     permit persons to whom the Software is furnished to do so, subject to
+"     the following conditions:
+"
+"     The above copyright notice and this permission notice shall be included
+"     in all copies or substantial portions of the Software.
+"
+"     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+"     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+"     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+"     IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+"     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+"     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+"     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+" }}}
+"=============================================================================
+
+CONTENTS					*alpaca_english-contents*
+
+Introduction		|alpaca_english-introduction|
+Install			|alpaca_english-install|
+Interface		|alpaca_english-interface|
+    Commands		    |alpaca_english-commands|
+    Functions		    |alpaca_english-functions|
+    Key Mappings	    |alpaca_english-key-mappings|
+    Autocmd		    |alpaca_english-autocmd|
+Customizing		|alpaca_english-customizing|
+Changelog		|alpaca_english-changelog|
+
+==============================================================================
+INTRODUCTION					*alpaca_english-introduction*
+This plugin supports completion of user input on Vim.
+
+==============================================================================
+INSTALL						*alpaca_english-install*
+This plugin is tested with Vim 7.3 (Maybe it works with 7.0 or higher).
+This plugin needs |+ruby| feature with Ruby2.0(Maybe it also works with 1.9).
+
+Firstly, move to root path of this plugin, and run `bundle` in the shell, because you have to install depends.
+Secondly, to install `Shougo/neocomplcache`, `Shougo/unite.vim` to vim.
+Finally, setting config to .vimrc. Please see at *alpaca_english-example*
+
+==============================================================================
+INTERFACE					*alpaca_english-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*alpaca_english-commands*
+
+:AlpacaEnglishEnable					*:AlpacaEnglishEnable*
+		Enable completion of alpaca_english.
+
+:AlpacaEnglishDisable					*:AlpacaEnglishDisable*
+		Disable completion of alpaca_english.
+
+------------------------------------------------------------------------------
+UNITE COMMANDS					*alpaca_english-unite_commands*
+
+:Unite english/dictionary				*:Unite_english/dictionary*
+		To consult dict of words as English-Japanese.
+
+:Unite english/thesaurus				*:Unite_english/thesaurus*
+		To consult thesaurus of words.
+
+:Unite english/example					*:Unite_english/example*
+		To consult example of words.
+
+------------------------------------------------------------------------------
+FUNCTIONS					*alpaca_english-functions*
+
+Nothing.
+
+==============================================================================
+FAQ						*alpaca_english-faq*
+
+Q: How I check Ruby's version on the vim?
+A:
+   run `:ruby p RUBY_DESCRIPTION`
+   You should use Ruby2.0.
+
+Q: I can't work this plugin.
+A:
+   1. `:ruby p require "sqlite3"`, `:ruby p require "json"`, and 
+   `:ruby p require "mechanize" should be equal `true`.
+   2. when to run `:echo alpaca_english#sqlite#search_thesaurus_word("word")`
+   and occur error, please send report to me.
+
+Q: Sometime, SEVG error occurd using alpaca_english.
+A: Maybe it probrem is bug of Vim. In the case, you should use latest Vim.
+   This bug had solved by patch793 aad patch795.
+
+------------------------------------------------------------------------------
+EXMPLE						*alpaca_english-example*
+
+if has("ruby")
+  NeoBundleLazy 'taichouchou2/alpaca_english', {
+        \ 'rev' : 'development',
+        \ 'build' : {
+        \   "mac" : "bundle",
+        \   "unix" : "bundle",
+        \   "other" : "bundle",
+        \ },
+        \ 'autoload' : {
+        \   'filetypes' : g:my.ft.english_files,
+        \   'commands' : ["AlpacaEnglishDisable", "AlpacaEnglishEnable", "AlpacaEnglishSay"],
+        \   'unite_sources': ['english/dictionary', 'english/example', 'english/thesaurus'],
+        \ }
+        \ }
+endif
+
+" ------------------------------------
+" alpaca_english enable
+" ------------------------------------
+let g:alpaca_english_enable=1
+let g:alpaca_english_max_candidates=100
+let g:alpaca_english_enable_duplicate_candidates=1
+
+let g:neocomplcache_text_mode_filetypes = {
+	\ 'markdown' : 1,
+	\ 'gitcommit' : 1,
+	\ 'text' : 1,
+	\ }
+
+nnoremap <C-J>e :<C-u>Unite english/dictionary -buffer-name=english<CR>
+nnoremap <C-J>x :<C-u>Unite english/example -buffer-name=example -input=
+nnoremap <C-J>t :<C-u>Unite english/thesaurus -buffer-name=thesaurus -input=
+
+==============================================================================
+CHANGELOG					*alpaca_english-changelog*
+
+0.0.1	2013-05-13
+	- Create document
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:fdm=marker:
