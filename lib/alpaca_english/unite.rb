@@ -49,10 +49,14 @@ module AlpacaEnglish
       AlpacaEnglish::DB.execute(sql) # result
     end# }}}
 
-    def self.alc_search(word) # {{{
+    def self.web_search(word) # {{{
+      web_search_url = VIM.get("g:alpaca_english_web_search_url")
+      query_url = sprintf(web_search_url, word)
+      query_xpath = VIM.get("g:alpaca_english_web_search_xpath")
+
       agent = ::Mechanize.new
-      page = agent.get("http://eow.alc.co.jp/#{word}/UTF-8/")
-      list = page.search("div[@id='resultsList']/ul/li")
+      page = agent.get(query_url)
+      list = page.search(query_xpath)
 
       complete = []
       list.each do |element|

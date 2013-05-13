@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: alc_search.vim
+" FILE: web_search.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
 " Last Modified: 2013-05-12
 " License: MIT license  {{{
@@ -24,9 +24,9 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'alc_search',
-      \ 'description' : 'show alc_search',
-      \}
+      \ 'name': 'web_search',
+      \ 'description' : 'show web_search',
+      \ }
 
 function! s:to_canditates(result) "{{{
   let canditates = []
@@ -52,7 +52,7 @@ function! s:unite_source.gather_candidates(args, context) "{{{
   " TODO リファクタリング
   ruby << EOF
   word = VIM.get("input")
-  complete = AlpacaEnglish::Unite.alc_search(word)
+  complete = AlpacaEnglish::Unite.web_search(word)
   VIM.let("result", complete)
 EOF
 
@@ -63,7 +63,7 @@ EOF
   endif
 endfunction"}}}
 
-function! unite#sources#alc_search#define() "{{{
+function! unite#sources#web_search#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : {}
 endfunction"}}}
 "}}}

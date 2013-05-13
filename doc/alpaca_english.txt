@@ -55,6 +55,29 @@ Finally, setting config to .vimrc. Please see at *alpaca_english-example*
 INTERFACE					*alpaca_english-interface*
 
 ------------------------------------------------------------------------------
+VARIABLE					*alpaca_english-variable*
+g:alpaca_english_enable				*g:alpaca_english_enable*
+	If set to 1, completion for neocomplcache is enable(default:0)
+
+g:alpaca_english_max_candidates			*g:alpaca_english_max_candidates*
+	This variable is limit length of candidates(default:20)
+
+g:alpaca_english_say_ignore_char		*g:alpaca_english_say_ignore_char*
+	Replace word into value from key when to use `AlpacaEnglishSay`.
+	(default:{
+	\ '[!]' : '.',
+	\ "#" : " number ",
+	\ '["=>]' : '',
+	\ }
+	)
+
+g:alpaca_english_web_search_url			*g:alpaca_english_web_search_url*
+	DEVELOPMENT VERSION
+
+g:alpaca_english_web_search_xpath		*g:alpaca_english_web_search_xpath*
+	DEVELOPMENT VERSION
+
+------------------------------------------------------------------------------
 COMMANDS					*alpaca_english-commands*
 
 :AlpacaEnglishEnable					*:AlpacaEnglishEnable*
