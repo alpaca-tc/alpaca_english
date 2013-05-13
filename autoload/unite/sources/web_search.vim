@@ -63,7 +63,11 @@ EOF
   endif
 endfunction"}}}
 
+function! s:active()
+  return !empty(g:alpaca_english_web_search_url) && !empty(g:alpaca_english_web_search_xpath)
+endfunction
+
 function! unite#sources#web_search#define() "{{{
-  return alpaca_english#is_active() ? s:unite_source : {}
+  return s:active() && alpaca_english#is_active() ? s:unite_source : {}
 endfunction"}}}
 "}}}

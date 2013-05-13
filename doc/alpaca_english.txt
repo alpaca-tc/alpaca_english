@@ -86,17 +86,23 @@ COMMANDS					*alpaca_english-commands*
 :AlpacaEnglishDisable					*:AlpacaEnglishDisable*
 		Disable completion of alpaca_english.
 
+:AlpacaEnglishSay					*:AlpacaEnglishSay*
+		Read a cursor word(Mac Only)
+
 ------------------------------------------------------------------------------
 UNITE COMMANDS					*alpaca_english-unite_commands*
 
-:Unite english/dictionary				*:Unite_english/dictionary*
+:Unite english_dictionary				*:Unite_english_dictionary*
 		To consult dict of words as English-Japanese.
 
-:Unite english/thesaurus				*:Unite_english/thesaurus*
+:Unite english_thesaurus				*:Unite_english_thesaurus*
 		To consult thesaurus of words.
 
-:Unite english/example					*:Unite_english/example*
+:Unite english_example					*:Unite_english_example*
 		To consult example of words.
+
+:Unite web_search					*:Unite_web_search*
+		DEVELOPMENT VERSION
 
 ------------------------------------------------------------------------------
 FUNCTIONS					*alpaca_english-functions*
