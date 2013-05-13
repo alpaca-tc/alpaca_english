@@ -24,7 +24,7 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'english',
+      \ 'name': 'english_dictionary',
       \ 'description' : 'english <-> japanese',
       \ 'hooks' : {},
       \ 'is_volatile': 1,
@@ -86,7 +86,7 @@ endfunction"}}}
 function! s:unite_source.hooks.on_syntax(args, context)
 endfunction
 
-function! unite#sources#english#define()
+function! unite#sources#english_dictionary#define()
   return alpaca_english#is_active() ? s:unite_source : {}
 endfunction
 "}}}

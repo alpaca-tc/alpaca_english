@@ -24,9 +24,9 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'thesaurus',
+      \ 'name': 'english_thesaurus',
       \ 'description' : 'show thesaurus',
-      \}
+      \ }
 
 function! s:to_canditates(result) "{{{
   let canditates = []
@@ -79,7 +79,7 @@ EOF
   endif
 endfunction"}}}
 
-function! unite#sources#thesaurus#define() "{{{
+function! unite#sources#english_thesaurus#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : {}
 endfunction"}}}
 "}}}

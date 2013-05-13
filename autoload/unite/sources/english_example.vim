@@ -24,7 +24,7 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'example',
+      \ 'name': 'english_example',
       \ 'hooks' : {},
       \ 'syntax' : 'uniteSource__Output',
       \ 'description' : 'show example',
@@ -95,7 +95,7 @@ function! s:unite_source.hooks.on_syntax(args, context) "{{{
   highlight default link uniteSource__alpaca_english_example_japanese Number
 endfunction"}}}
 
-function! unite#sources#example#define() "{{{
+function! unite#sources#english_example#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : {}
 endfunction"}}}
 "}}}
