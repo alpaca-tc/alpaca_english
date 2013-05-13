@@ -25,6 +25,8 @@
 "=============================================================================
 let s:unite_source = {
       \ 'name': 'example',
+      \ 'hooks' : {},
+      \ 'syntax' : 'uniteSource__Output',
       \ 'description' : 'show example',
       \}
 
@@ -84,6 +86,13 @@ EOF
   else
     return s:to_canditates(result)
   endif
+endfunction"}}}
+
+function! s:unite_source.hooks.on_syntax(args, context) "{{{
+  let g:hoge_s = "aaa"
+  syntax match uniteSource__alpaca_english_example_japanese /access/ containedin=uniteCandidateAbbr contained
+
+  highlight default link uniteSource__alpaca_english_example_japanese Number
 endfunction"}}}
 
 function! unite#sources#example#define() "{{{

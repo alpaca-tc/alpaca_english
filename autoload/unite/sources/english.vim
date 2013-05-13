@@ -26,6 +26,7 @@
 let s:unite_source = {
       \ 'name': 'english',
       \ 'description' : 'english <-> japanese',
+      \ 'hooks' : {},
       \ 'is_volatile': 1,
       \ 'max_candidates' : 50,
       \ 'matchers' : 'matcher_english',
@@ -71,7 +72,7 @@ function! s:get_dummy_candidates() "{{{
 endfunction"}}}
 
 " define source"{{{
-function! s:unite_source.gather_candidates(args, context)
+function! s:unite_source.gather_candidates(args, context) "{{{
   let input = a:context["input"]
 
   if input =~ '^\s*$'
@@ -80,6 +81,9 @@ function! s:unite_source.gather_candidates(args, context)
     let res = alpaca_english#sqlite#search_with_complex_conditions(a:args, a:context)
     return empty(res) ? res : s:to_canditates(res)
   endif
+endfunction"}}}
+
+function! s:unite_source.hooks.on_syntax(args, context)
 endfunction
 
 function! unite#sources#english#define()
