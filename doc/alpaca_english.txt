@@ -132,6 +132,16 @@ Q: Sometime, SEVG error occurd using alpaca_english.
 A: Maybe it probrem is bug of Vim. In the case, you should use latest Vim.
    This bug had solved by patch793 aad patch795.
 
+   Or, to append to .vimrc.
+	" http://rubyforge.org/pipermail/vim-ruby-devel/2007q1/000698.html
+	" Fix up ruby interface
+	" For vim > v932
+	if has('ruby')
+	  silent! ruby nil
+	endif
+
+
+
 ------------------------------------------------------------------------------
 EXMPLE						*alpaca_english-example*
 
