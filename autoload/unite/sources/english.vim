@@ -24,7 +24,7 @@
 " }}}
 "=============================================================================
 let s:unite_source = {
-      \ 'name': 'english',
+      \ 'name': 'english/dictionary',
       \ 'description' : 'english <-> japanese',
       \ 'hooks' : {},
       \ 'is_volatile': 1,
