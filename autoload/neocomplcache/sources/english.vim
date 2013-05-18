@@ -47,6 +47,7 @@ function! neocomplcache#sources#english#define() "{{{
 endfunction"}}}
 
 " thanks mattn!
+" XXX I never tested this.:p
 function! neocomplcache#sources#english#completefunc(findstart, base) "{{{
   if a:findstart
     let [line, start] = [getline('.'), col('.') - 1]

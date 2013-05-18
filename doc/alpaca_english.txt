@@ -3,7 +3,7 @@
 "=============================================================================
 " FILE: alpaca_english
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
-" Last Modified: 2013-05-13
+" Last Modified: 2013-05-18
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -47,7 +47,8 @@ INSTALL						*alpaca_english-install*
 This plugin is tested with Vim 7.3 (Maybe it works with 7.0 or higher).
 This plugin needs |+ruby| feature with Ruby2.0(Maybe it also works with 1.9).
 
-Firstly, move to root path of this plugin, and run `bundle` in the shell, because you have to install depends.
+Firstly, move to root path of this plugin, and run `bundle` in the shell, 
+because you have to install depends.
 Secondly, to install `Shougo/neocomplcache`, `Shougo/unite.vim` to vim.
 Finally, setting config to .vimrc. Please see at *alpaca_english-example*
 
@@ -56,6 +57,7 @@ INTERFACE					*alpaca_english-interface*
 
 ------------------------------------------------------------------------------
 VARIABLE					*alpaca_english-variable*
+
 g:alpaca_english_enable				*g:alpaca_english_enable*
 	If set to 1, completion for neocomplcache is enable(default:0)
 
@@ -72,14 +74,15 @@ g:alpaca_english_say_ignore_char		*g:alpaca_english_say_ignore_char*
 	)
 
 g:alpaca_english_use_cursor_word		*g:alpaca_english_use_cursor_word*
-	If set to 1, when to use unite and input is empty,	       use use cursor word as alternate
+	If set to 1, when to use unite and input is empty, auto inputting
+	cursor word as alternate
 	(default:1)
 
 g:alpaca_english_web_search_url			*g:alpaca_english_web_search_url*
-	DEVELOPMENT VERSION
+	DEVELOPMENT VERSION:p
 
 g:alpaca_english_web_search_xpath		*g:alpaca_english_web_search_xpath*
-	DEVELOPMENT VERSION
+	DEVELOPMENT VERSION:p
 
 ------------------------------------------------------------------------------
 COMMANDS					*alpaca_english-commands*
@@ -116,6 +119,11 @@ Nothing.
 ==============================================================================
 FAQ						*alpaca_english-faq*
 
+Q: How can I search many word quickly?
+A: 
+   You can try to tap <Plug>(unite_redraw) in the unite.
+   Maybe, it's binded with <C-L> as default.
+
 Q: How I check Ruby's version on the vim?
 A:
    run `:ruby p RUBY_DESCRIPTION`
@@ -123,8 +131,10 @@ A:
 
 Q: I can't work this plugin.
 A:
-   1. `:ruby p require "sqlite3"`, `:ruby p require "json"`, and 
-   `:ruby p require "mechanize" should be equal `true`.
+   1. `:ruby p require "sqlite3"`
+      `:ruby p require "json"`
+      `:ruby p require "mechanize" 
+      should be equal `true`.
    2. when to run `:echo alpaca_english#sqlite#search_thesaurus_word("word")`
    and occur error, please send report to me.
 
@@ -133,14 +143,12 @@ A: Maybe it probrem is bug of Vim. In the case, you should use latest Vim.
    This bug had solved by patch793 aad patch795.
 
    Or, to append to .vimrc.
-	" http://rubyforge.org/pipermail/vim-ruby-devel/2007q1/000698.html
 	" Fix up ruby interface
+	" http://rubyforge.org/pipermail/vim-ruby-devel/2007q1/000698.html
 	" For vim > v932
 	if has('ruby')
 	  silent! ruby nil
 	endif
-
-
 
 ------------------------------------------------------------------------------
 EXMPLE						*alpaca_english-example*
@@ -165,7 +173,7 @@ endif
 " alpaca_english enable
 " ------------------------------------
 let g:alpaca_english_enable=1
-let g:alpaca_english_max_candidates=100
+let g:alpaca_english_max_candidates=30
 let g:alpaca_english_enable_duplicate_candidates=1
 
 let g:neocomplcache_text_mode_filetypes = {
@@ -175,12 +183,14 @@ let g:neocomplcache_text_mode_filetypes = {
 	\ }
 
 nnoremap <C-J>e :<C-u>Unite english/dictionary -buffer-name=english<CR>
-nnoremap <C-J>x :<C-u>Unite english/example -buffer-name=example -input=
-nnoremap <C-J>t :<C-u>Unite english/thesaurus -buffer-name=thesaurus -input=
+nnoremap <C-J>x :<C-u>Unite english/example -buffer-name=example<CR>
+nnoremap <C-J>t :<C-u>Unite english/thesaurus -buffer-name=thesaurus<CR>
 
 ==============================================================================
 CHANGELOG					*alpaca_english-changelog*
 
+0.0.2	2013-05-18
+	- Fixed document
 0.0.1	2013-05-13
 	- Create document
 
