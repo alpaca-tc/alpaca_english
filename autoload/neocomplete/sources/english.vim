@@ -1,7 +1,14 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:source = neocomplcache#sources#english#define()
+let s:source = {
+      \ "name" : "english",
+      \ "kind" : "plugin",
+      \ "mark" : "[en]",
+      \ "max_candidates" : 15,
+      \ "min_pattern_length" : 3,
+      \ "is_volatile": 1,
+      \ }
 
 function! s:to_canditates(dict) "{{{
   let res = []
@@ -20,16 +27,18 @@ function! s:to_canditates(dict) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  let input = a:context.complete_str
-  if (exists('b:alpaca_english_enable') ) ?
-        \ !b:alpaca_english_enable :
-        \ !(neocomplete#is_text_mode() || neocomplete#within_comment())
-        \ || input !~ '^[[:alpha:]]\+$'
+  if exists('b:alpaca_english_enable') ? 
+          \ !b:alpaca_english_enable :
+          \ !(neocomplcache#is_text_mode() || neocomplcache#within_comment())
+          \ || a:context.complete_str !~ '^[[:alpha:]]\+$'
     return []
   endif
 
-  let result = alpaca_english#sqlite#get_record(input)
+  if neocomplete#util#get_last_status()
+    return []
+  endif
 
+  let result = alpaca_english#sqlite#get_record(a:context.complete_str)
   return s:to_canditates(result)
 endfunction"}}}
 
