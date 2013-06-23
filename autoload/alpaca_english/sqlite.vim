@@ -16,7 +16,6 @@ function! alpaca_english#sqlite#search_with_complex_conditions(args, context) "{
   call alpaca_english#initialize()
   let input = a:context["input"]
 
-  echo input
   try
     ruby <<EOF
     AlpacaEnglish.run do
