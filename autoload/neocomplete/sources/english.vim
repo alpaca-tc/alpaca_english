@@ -29,7 +29,7 @@ endfunction"}}}
 function! s:source.gather_candidates(context) "{{{
   if exists('b:alpaca_english_enable') ? 
           \ !b:alpaca_english_enable :
-          \ !(neocomplcache#is_text_mode() || neocomplcache#within_comment())
+          \ !(neocomplete#is_text_mode() || neocomplete#within_comment())
           \ || a:context.complete_str !~ '^[[:alpha:]]\+$'
     return []
   endif

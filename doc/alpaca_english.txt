@@ -50,7 +50,7 @@ This plugin needs |+ruby| feature with Ruby2.0(Maybe it also works with 1.9).
 Firstly, move to root path of this plugin, and run `bundle` in the shell, 
 because you have to install depends.
 Secondly, to install `Shougo/neocomplcache`, `Shougo/unite.vim` to vim.
-Finally, setting config to .vimrc. Please see at *alpaca_english-example*
+Finally, setting config to .vimrc. Please see at `alpaca_english-example`
 
 ==============================================================================
 INTERFACE					*alpaca_english-interface*
