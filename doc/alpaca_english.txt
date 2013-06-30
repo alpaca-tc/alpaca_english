@@ -135,14 +135,14 @@ A:
       `:ruby p require "json"`
       `:ruby p require "mechanize" 
       should be equal `true`.
-   2. when to run `:echo alpaca_english#sqlite#search_thesaurus_word("word")`
+   2. when to run `:echo alpaca_english#sqlite#get_record("test")`
    and occur error, please send report to me.
 
 Q: Sometime, SEVG error occurd using alpaca_english.
 A: Maybe it probrem is bug of Vim. In the case, you should use latest Vim.
    This bug had solved by patch793 aad patch795.
 
-   Or, to append to .vimrc.
+   Or, to append to head of .vimrc.
 	" Fix up ruby interface
 	" http://rubyforge.org/pipermail/vim-ruby-devel/2007q1/000698.html
 	" For vim > v932
@@ -162,7 +162,7 @@ if has("ruby")
         \   "other" : "bundle",
         \ },
         \ 'autoload' : {
-        \   'filetypes' : g:my.ft.english_files,
+        \   'filetypes' : ['markdown', 'text'],
         \   'commands' : ["AlpacaEnglishDisable", "AlpacaEnglishEnable", "AlpacaEnglishSay"],
         \   'unite_sources': ['english/dictionary', 'english/example', 'english/thesaurus'],
         \ }
@@ -182,9 +182,11 @@ let g:neocomplcache_text_mode_filetypes = {
 	\ 'text' : 1,
 	\ }
 
-nnoremap <C-J>e :<C-u>Unite english/dictionary -buffer-name=english<CR>
-nnoremap <C-J>x :<C-u>Unite english/example -buffer-name=example<CR>
-nnoremap <C-J>t :<C-u>Unite english/thesaurus -buffer-name=thesaurus<CR>
+nnoremap <C-J>e :<C-u>Unite english/dictionary<CR>
+nnoremap <C-J>x :<C-u>Unite english/example<CR>
+nnoremap <C-J>t :<C-u>Unite english/thesaurus<CR>
+
+Uniteのheadで文字を入力した後、`<C-L>`で再検索が可能です。
 
 ==============================================================================
 CHANGELOG					*alpaca_english-changelog*

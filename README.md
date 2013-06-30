@@ -54,15 +54,18 @@ if has("ruby")
         \   "other" : "bundle",
         \ },
         \ 'autoload' : {
-        \   'filetypes' : g:my.ft.english_files,
+        \   'filetypes' : ['markdown', 'text'],
         \   'commands' : ["AlpacaEnglishDisable", "AlpacaEnglishEnable", "AlpacaEnglishSay"],
         \   'unite_sources': ['english_dictionary', 'english_example', 'english_thesaurus'],
         \ }
         \ }
 endif
 
+" 有効にする
 let g:alpaca_english_enable=1
+" SQL検索のLIMITを設定
 let g:alpaca_english_max_candidates=100
+" Buffer補完などで、既に候補がある場合も英語の候補を表示する
 let g:alpaca_english_enable_duplicate_candidates=1
 
 " 補完を有効にするファイルタイプを追加
@@ -77,6 +80,12 @@ let g:neocomplcache_text_mode_filetypes = {
 
 このREADMEがあるディレクトリにて`bundle`を実行してください。
 `bundle`が無い場合は、`gem install bundler`で先にインストールしてください。
+
+```sh
+$ cd /path/to/alpaca_english
+$ gem install bundler
+$ bundle
+```
 
 ## 実装予定
 
