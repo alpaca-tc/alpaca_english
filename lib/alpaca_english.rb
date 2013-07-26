@@ -1,10 +1,9 @@
-require "json"
-require "sqlite3"
+require 'json'
+require 'sqlite3'
 
-lib_root_path = File.expand_path(File.dirname(__FILE__))
-require "#{lib_root_path}/vim.rb"
-require "#{lib_root_path}/sqlite/sqlite.rb"
-require "#{lib_root_path}/core_ext/string.rb"
+require 'vim.rb'
+require 'sqlite/sqlite.rb'
+require 'core_ext/string.rb'
 
 module AlpacaEnglish #{{{
   def self.run #{{{
@@ -16,8 +15,7 @@ module AlpacaEnglish #{{{
     end
   end #}}}
 
-  lib_root_path = File.expand_path(File.dirname(__FILE__))
-  autoload :DB, "#{lib_root_path}/alpaca_english/db.rb"
-  autoload :Unite, "#{lib_root_path}/alpaca_english/unite.rb"
-  autoload :Completion, "#{lib_root_path}/alpaca_english/completion.rb"
+  autoload :DB, 'alpaca_english/db.rb'
+  autoload :Unite, 'alpaca_english/unite.rb'
+  autoload :Completion, 'alpaca_english/completion.rb'
 end #}}}

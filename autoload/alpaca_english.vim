@@ -8,9 +8,11 @@ function! alpaca_english#initialize() "{{{
 
   ruby << EOF
   plugin_root_path = VIM.evaluate("g:alpaca_english_plugin_root_dir")
-  lib_path = File.expand_path("#{plugin_root_path}/lib")
-  require "#{lib_path}/alpaca_english.rb"
+  $: << File.expand_path("#{plugin_root_path}/lib")
+  require 'alpaca_english'
 EOF
+
+  return 1
 endfunction"}}}
 
 function! alpaca_english#is_active() "{{{
