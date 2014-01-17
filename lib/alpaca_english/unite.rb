@@ -24,7 +24,6 @@ module AlpacaEnglish
                        and_conditions
                      end
 
-        VIM.debug(word)
         conditions << if text.is_japanese? then
                       "mean like '%#{word}%'"
                     else

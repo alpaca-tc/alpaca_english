@@ -1,6 +1,3 @@
-" [todo] - debug を削除する
-let g:alpaca_english#debug = {}
-
 function! alpaca_english#initialize() "{{{
   if exists('s:initialized')
     return 0

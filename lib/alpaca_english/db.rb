@@ -15,7 +15,6 @@ module AlpacaEnglish
       res = database.execute(sql)
       database.close
 
-      VIM.debug("last_sql", sql)
       res
     end
   end #}}}

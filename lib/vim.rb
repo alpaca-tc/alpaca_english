@@ -19,11 +19,5 @@ module VIM
         value
       end
     end
-
-    def debug(name_or_message, message = nil)
-      name = message ? name_or_message : "_"
-      message ||= name_or_message
-      let("g:alpaca_english#debug.#{name}", message)
-    end
   end
 end
