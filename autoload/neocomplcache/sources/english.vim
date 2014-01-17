@@ -1,6 +1,8 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" [todo] - コードを全部書き換えて、奇麗にする。あと、テストを行う
+
 let s:name =  'english'
 let s:source = {
       \ 'name' : s:name,
@@ -61,5 +63,3 @@ function! neocomplcache#sources#english#completefunc(findstart, base) "{{{
         \  alpaca_english#sqlite#get_record(a:base),
         \ '{"word": v:val[1], "abbr": v:val[1].": ".v:val[2], "info": v:val[3]}'), "refresh": "always"}
 endfunction"}}}
-
-" vim: foldmethod=marker

@@ -1,7 +1,7 @@
 require 'mechanize'
 module AlpacaEnglish
   module Unite #{{{
-    # TODO リファクタリング
+    # [todo] - これはひどい。時間がかかるから、最後にやろう。テストも書こう。
     def self.parse_input(input) #{{{
       splited = input.split(" ")
       and_conditions = []

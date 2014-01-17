@@ -1,6 +1,8 @@
 function! alpaca_english#sqlite#search(cur_keyword_str) "{{{
   call alpaca_english#initialize()
 
+  " [todo] - Vim自体を拡張しない
+
   ruby << EOF
   AlpacaEnglish.run do
     input = VIM.get("a:cur_keyword_str")
@@ -15,6 +17,7 @@ endfunction"}}}
 function! alpaca_english#sqlite#search_with_complex_conditions(args, context) "{{{
   call alpaca_english#initialize()
   let input = a:context["input"]
+  " [todo] - この糞みたいなメソッドをリファクタリングする2
 
   try
     ruby <<EOF
@@ -32,6 +35,8 @@ EOF
 endfunction"}}}
 
 function! alpaca_english#sqlite#search_thesaurus_word(word) "{{{
+  " [todo] - この糞みたいなメソッドをリファクタリングする
+
   call alpaca_english#initialize()
   let word_list = alpaca_english#thesaurus#search_word(a:word)
   call insert(word_list, a:word)

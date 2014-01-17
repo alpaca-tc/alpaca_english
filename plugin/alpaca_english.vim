@@ -34,6 +34,7 @@ function! s:let(name, value) "{{{
   execute "let " .a:name. " = exists('" .a:name. "') ? " . a:name ." : " . value
 endfunction"}}}
 
+" [todo] - 色々変数名を書き換える...
 let g:alpaca_english_plugin_root_dir = expand("<sfile>:p:h:h")
 call s:let('g:alpaca_english_enable', 0)
 call s:let('g:alpaca_english_max_candidates', 20)

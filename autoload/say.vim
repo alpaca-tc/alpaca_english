@@ -9,6 +9,8 @@ function! s:escape(str) "{{{
   return str
 endfunction"}}}
 
+" [todo] - pkillを使うのをやめる。
+" [todo] - systemの使い方を変える。
 function! say#run() range "{{{
   let content = []
   call map(range(a:firstline, a:lastline), 'add(content, getline(v:val))')

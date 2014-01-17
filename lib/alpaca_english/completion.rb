@@ -1,5 +1,6 @@
 module AlpacaEnglish
   module Completion #{{{
+    # [review] - コードがきちゃない。。
     def self.complete_thesaurus(file_path, filter, max=100)
       file = File.new(file_path, "r")
       result = []
@@ -13,6 +14,7 @@ module AlpacaEnglish
       result
     end
 
+    # [review] - 抽象化するか？どうしよう。
     def self.complete_english(input)
       sql_opt = "where word like '#{input}%'"
       sql = "select * from items #{sql_opt}"

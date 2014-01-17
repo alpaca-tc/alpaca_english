@@ -1,3 +1,4 @@
+# VIMを直接拡張しない。
 module VIM
   # escape ruby object
   class << self
@@ -13,7 +14,7 @@ module VIM
     def get(name)
       value = evaluate(name)
       if value.is_a? String
-        value.force_encoding(encode) 
+        value.force_encoding(encode)
       else
         value
       end

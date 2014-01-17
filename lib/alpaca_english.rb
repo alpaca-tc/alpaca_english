@@ -6,6 +6,7 @@ require 'sqlite/sqlite.rb'
 require 'core_ext/string.rb'
 
 module AlpacaEnglish #{{{
+  # [review] - 意味が分からない...
   def self.run #{{{
     # TODO instance_evalの形に出来ないかな。
     begin

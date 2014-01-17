@@ -1,4 +1,6 @@
 function! alpaca_english#thesaurus#search_word(word) "{{{
+  " [todo] - 汚物を処理する
+
   " error check
   if g:alpaca_english_thesaurus_file == ""
     call alpaca_english#print_error("g:alpaca_english_thesaurus_file is empty")

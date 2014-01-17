@@ -13,6 +13,7 @@ class String
 end
 
 module ExtendForUniteString
+  # もっと奇麗なコードに書き換える
   def is_japanese?
     # self.match(/[ぁ-んァ-ヴ一-龠亜-煕]/).nil?
     # self.match(/[ぁ-んァ-ヴ一-煕]/).nil?

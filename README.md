@@ -1,5 +1,6 @@
 # AlpacaEnglish
 
+
 ## About me
 
 このプラグインは英語を話したいけど、話せない!!
@@ -14,7 +15,7 @@ SQLite補完なので、爆速です。
 
 ![english補完](http://cl.ly/image/1l1l0g272I1N/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202013-04-21%208.37.39.png)
 
-### Unite 
+### Unite
 
 *english_dictionary(辞書検索)*
 
