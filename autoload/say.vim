@@ -17,8 +17,8 @@ function! say#run() range "{{{
   let str = s:escape(join(content, ". "))
 
   if executable('pkill')
-    call alpaca_english#system(["pkill", "-f say"])
+    call alpaca_english#util#system('pkill -f say')
   endif
 
-  call alpaca_english#system(["say", '"', str, '"'])
+  call alpaca_english#util#system(["say '" . str . "'"])
 endfunction"}}}
