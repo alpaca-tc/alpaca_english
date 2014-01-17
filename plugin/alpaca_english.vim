@@ -28,36 +28,34 @@ if exists('g:loaded_alpaca_english')
 endif
 let g:loaded_alpaca_english = 1
 
-function! s:let(name, value) "{{{
-  let value = string(a:value)
+let s:save_cpo = &cpo
+set cpo&vim
 
-  execute "let " .a:name. " = exists('" .a:name. "') ? " . a:name ." : " . value
-endfunction"}}}
-
-" [todo] - 色々変数名を書き換える...
 let g:alpaca_english_plugin_root_dir = expand("<sfile>:p:h:h")
-call s:let('g:alpaca_english_enable', 0)
-call s:let('g:alpaca_english_max_candidates', 20)
-call s:let('g:alpaca_english_db_path', g:alpaca_english_plugin_root_dir . '/db/ejdict.sqlite3')
-call s:let('g:alpaca_english_enable_duplicate_candidates', 0)
-call s:let('g:alpaca_english_say_ignore_char', {
+let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 0)
+let g:alpaca_english_max_candidates = get(g:, 'alpaca_english_max_candidates', 20)
+let g:alpaca_english_db_path = get(g:, 'alpaca_english_db_path',
+      \ g:alpaca_english_plugin_root_dir . '/db/ejdict.sqlite3')
+let g:alpaca_english_enable_duplicate_candidates =
+      \ get(g:, 'alpaca_english_enable_duplicate_candidates', 0)
+let g:alpaca_english_say_ignore_char = get(g:, 'alpaca_english_say_ignore_char',
+      \ {
       \ '[!]' : '.',
       \ "#" : " number ",
       \ '["=>]' : '',
       \ })
-call s:let('g:alpaca_english_use_cursor_word', 1)
-call s:let('g:alpaca_english_web_search_url', '')
-call s:let('g:alpaca_english_web_search_xpath', '')
+let g:alpaca_english_use_cursor_word = get(g:, 'alpaca_english_use_cursor_word', 1)
+let g:alpaca_english_web_search_url =
+      \ get(g:, 'alpaca_english_web_search_url', 'http://eow.alc.co.jp/%s/UTF-8/')
+let g:alpaca_english_web_search_xpath =
+      \ get(g:, 'alpaca_english_web_search_xpath', "div[@id='resultsList']/ul/li")
 
 command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
 command! AlpacaEnglishEnable let b:alpaca_english_enable = 1
-if has('mac')
+
+if has('mac') && executable('say')
   command! -range AlpacaEnglishSay :<line1>,<line2> call say#run()
 endif
 
-let s:save_cpo = &cpo
-set cpo&vim
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
-" vim:foldmethod=marker
