@@ -1,4 +1,4 @@
-function! alpaca_english#sqlite#get_record(cur_keyword_str) "{{{
+function! alpaca_english#sqlite#search(cur_keyword_str) "{{{
   call alpaca_english#initialize()
 
   ruby << EOF
