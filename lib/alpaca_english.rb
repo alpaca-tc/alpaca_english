@@ -1,9 +1,9 @@
 require 'json'
 require 'sqlite3'
 
-require 'vim.rb'
-require 'sqlite/sqlite.rb'
-require 'core_ext/string.rb'
+require_relative 'ruby_vim'
+require_relative 'sqlite/sqlite'
+require_relative 'core_ext/string'
 
 module AlpacaEnglish #{{{
   # [review] - 意味が分からない...
@@ -12,7 +12,7 @@ module AlpacaEnglish #{{{
     begin
       yield
     rescue => e
-      VIM::message("error occurd. #{e.inspect}")
+      RubyVIM::message("error occurd. #{e.inspect}")
     end
   end #}}}
 

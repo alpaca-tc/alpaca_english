@@ -1,13 +1,11 @@
 function! alpaca_english#sqlite#search(cur_keyword_str) "{{{
   call alpaca_english#initialize()
 
-  " [todo] - Vim自体を拡張しない
-
   ruby << EOF
   AlpacaEnglish.run do
-    input = VIM.get("a:cur_keyword_str")
+    input = RubyVIM.get("a:cur_keyword_str")
     res = AlpacaEnglish::Completion.complete_english(input)
-    VIM.let("s:complete", res)
+    RubyVIM.let("s:complete", res)
   end
 EOF
 
@@ -22,9 +20,9 @@ function! alpaca_english#sqlite#search_with_complex_conditions(args, context) "{
   try
     ruby <<EOF
     AlpacaEnglish.run do
-      input = VIM.get("input")
+      input = RubyVIM.get("input")
       result = AlpacaEnglish::Unite.search_with_complex_conditions(input)
-      VIM.let("conditions", result)
+      RubyVIM.let("conditions", result)
     end
 EOF
     return conditions

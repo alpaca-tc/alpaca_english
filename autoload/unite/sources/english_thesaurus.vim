@@ -52,7 +52,7 @@ function! s:unite_source.gather_candidates(args, context) "{{{
   ruby << EOF
   require 'mechanize'
   agent = Mechanize.new
-  word = VIM.get("input")
+  word = RubyVIM.get("input")
   page = agent.get("http://ejje.weblio.jp/english-thesaurus/content/#{word}")
   list = page.search("div[@class='kiji']/table[@class='wdntT']//tr")
 
@@ -67,10 +67,10 @@ function! s:unite_source.gather_candidates(args, context) "{{{
     complete << res unless res["words"].empty?
   end
 
-  VIM.let("result", complete)
+  RubyVIM.let("result", complete)
 EOF
 
-  if input =~ '^\s*$' || empty(result) 
+  if input =~ '^\s*$' || empty(result)
     return [{"word" : "error occurd", "is_dummy" : 1}]
   else
     return s:to_canditates(result)

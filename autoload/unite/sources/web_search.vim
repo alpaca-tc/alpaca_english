@@ -49,12 +49,12 @@ function! s:unite_source.gather_candidates(args, context) "{{{
 
   " TODO リファクタリング
   ruby << EOF
-  word = VIM.get("input")
+  word = RubyVIM.get("input")
   complete = AlpacaEnglish::Unite.web_search(word)
-  VIM.let("result", complete)
+  RubyVIM.let("result", complete)
 EOF
 
-  if input =~ '^\s*$' || empty(result) 
+  if input =~ '^\s*$' || empty(result)
     return [{"word" : "error occurd", "is_dummy" : 1}]
   else
     return s:to_canditates(result)

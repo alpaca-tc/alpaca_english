@@ -21,12 +21,12 @@ function! alpaca_english#thesaurus#search_word(word) "{{{
 
   ruby << EOF
   AlpacaEnglish.run do
-    word = VIM.evaluate("a:word")
-    file_path = VIM.evaluate("g:alpaca_english_thesaurus_file")
-    max = VIM.evaluate("g:alpaca_english_max_candidates")
+    word = RubyVIM.evaluate("a:word")
+    file_path = RubyVIM.evaluate("g:alpaca_english_thesaurus_file")
+    max = RubyVIM.evaluate("g:alpaca_english_max_candidates")
     thesaurus_words = AlpacaEnglish::Completion.complete_thesaurus(file_path, word, max)
     thesaurus_words ||= []
-    VIM.let("complete", thesaurus_words)
+    RubyVIM.let("complete", thesaurus_words)
   end
 EOF
 

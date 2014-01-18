@@ -53,7 +53,7 @@ function! s:unite_source.gather_candidates(args, context) "{{{
   ruby << EOF
   require 'mechanize'
 
-  word = VIM.get("input")
+  word = RubyVIM.get("input")
   condition = if word.match(/^[a-zA-Z]+$/) then
                 %w[qotCE qotCJ]
               else
@@ -76,10 +76,10 @@ function! s:unite_source.gather_candidates(args, context) "{{{
     complete << res
   end
 
-  VIM.let("result", complete)
+  RubyVIM.let("result", complete)
 EOF
 
-  if input =~ '^\s*$' || empty(result) 
+  if input =~ '^\s*$' || empty(result)
     return [{"word" : "error occurd", "is_dummy" : 1}]
   else
     return s:to_canditates(result)

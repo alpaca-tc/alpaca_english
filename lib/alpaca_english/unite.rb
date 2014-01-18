@@ -49,9 +49,9 @@ module AlpacaEnglish
     end# }}}
 
     def self.web_search(word) # {{{
-      web_search_url = VIM.get("g:alpaca_english_web_search_url")
+      web_search_url = RubyVIM.get("g:alpaca_english_web_search_url")
       query_url = sprintf(web_search_url, word)
-      query_xpath = VIM.get("g:alpaca_english_web_search_xpath")
+      query_xpath = RubyVIM.get("g:alpaca_english_web_search_xpath")
 
       agent = ::Mechanize.new
       page = agent.get(query_url)
