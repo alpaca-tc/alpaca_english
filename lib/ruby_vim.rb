@@ -1,5 +1,4 @@
 module RubyVIM
-  include VIM
   extend VIM
 
   def self.encode
