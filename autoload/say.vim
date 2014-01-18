@@ -8,10 +8,9 @@ function! s:escape(str) "{{{
 endfunction"}}}
 
 function! say#run() range "{{{
-  " [todo] - VitalのProcessManagerを使う？
   let content = []
   call map(range(a:firstline, a:lastline), 'add(content, getline(v:val))')
-  let str = s:escape(join(content, ". "))
+  let str = s:escape(join(content, '. '))
 
   if executable('pkill')
     call alpaca_english#util#system('pkill -f say')
