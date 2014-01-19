@@ -11,7 +11,7 @@ function! neocomplete#sources#english#define() "{{{
   return alpaca_english#is_active() ? s:source : {}
 endfunction"}}}
 
-function! s:to_canditates(dict) "{{{
+function! neocomplete#sources#english#to_candidates(dict) "{{{
   let result = []
   for record in a:dict
     let candidate = {
@@ -36,5 +36,5 @@ function! s:source.gather_candidates(context) "{{{
 
   let result = alpaca_english#sqlite#search(a:context.complete_str)
 
-  return s:to_canditates(result)
+  return neocomplete#sources#english#to_candidates(result)
 endfunction"}}}

@@ -19,3 +19,19 @@ endfunction"}}}
 function! alpaca_english#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None
 endfunction"}}}
+
+
+function! alpaca_english#completefunc(findstart, base)
+  if a:findstart
+    let [line, start] = [getline('.'), col('.') - 1]
+    while start > 0 && line[start - 1] =~ '\a'
+      let start -= 1
+    endwhile
+
+    return start
+  endif
+
+  let result = alpaca_english#sqlite#search(a:base)
+
+  return neocomplete#sources#english#to_candidates(result)
+endfunction
