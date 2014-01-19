@@ -1,3 +1,6 @@
+let s:Process = vital#of('alpaca_english').import('Process')
+let g:Process = s:Process
+
 function! s:exists_vimproc() "{{{
   " [todo] - Vitalを使う？2
   if !exists('s:exists_vimproc')
