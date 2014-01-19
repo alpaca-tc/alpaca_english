@@ -14,14 +14,14 @@ endfunction"}}}
 function! s:to_canditates(dict) "{{{
   let res = []
   for record in a:dict
-    let can = {
+    let candidate = {
           \ 'word' : record[1],
           \ 'abbr' : record[1]. ' '. record[2],
           \ 'menu' : '[EN]',
           \ 'dup' : g:alpaca_english_enable_duplicate_candidates,
           \ 'info': record[2],
           \ }
-    call add(res, can)
+    call add(res, candidate)
   endfor
 
   return res

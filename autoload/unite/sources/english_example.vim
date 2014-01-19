@@ -32,12 +32,12 @@ let s:unite_source = {
 
 function! s:to_canditates(result) "{{{
   let canditates = []
-  for can in a:result
+  for canditate in a:result
     let candidate = {
-          \ "word" : can["example"] . "\n" . can["transrate"],
-          \ "__unite_english" : can["example"],
-          \ "__unite_transrate" : can["transrate"],
-          \ "is_multiline" : 1,
+          \ 'word' : canditate['example'] . "\n" . canditate['transrate'],
+          \ '__unite_english' : canditate['example'],
+          \ '__unite_transrate' : canditate['transrate'],
+          \ 'is_multiline' : 1,
           \ }
     call add(canditates, candidate)
   endfor

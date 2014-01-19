@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: web_search.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
-" Last Modified: 2013-05-12
+" Last Modified: Jan 19 2014
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,10 +32,10 @@ function! s:to_canditates(result) "{{{
   let canditates = []
   for can in a:result
     let candidate = {
-          \ "word" : can["example"] . "\n" . can["transrate"],
-          \ "__unite_example" : can["example"],
-          \ "__unite_transrate" : can["transrate"],
-          \ "is_multiline" : 1,
+          \ 'word' : can['example'] . "\n" . can['transrate'],
+          \ '__unite_example' : can['example'],
+          \ '__unite_transrate' : can['transrate'],
+          \ 'is_multiline' : 1,
           \ }
     call add(canditates, candidate)
   endfor
@@ -47,7 +47,6 @@ function! s:unite_source.gather_candidates(args, context) "{{{
   call alpaca_english#initialize()
   let input = unite#english_util#get_input(a:context)
 
-  " TODO リファクタリング
   ruby << EOF
   word = RubyVIM.get("input")
   complete = AlpacaEnglish::Unite.web_search(word)
@@ -61,11 +60,6 @@ EOF
   endif
 endfunction"}}}
 
-function! s:active()
-  return !empty(g:alpaca_english_web_search_url) && !empty(g:alpaca_english_web_search_xpath)
-endfunction
-
 function! unite#sources#web_search#define() "{{{
-  return s:active() && alpaca_english#is_active() ? s:unite_source : {}
-endfunction"}}}
-"}}}
+  return alpaca_english#is_active() ? s:unite_source : {}
+endfunction "}}}
