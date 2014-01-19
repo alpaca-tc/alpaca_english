@@ -10,6 +10,7 @@ module AlpacaEnglish
     def self.execute(sql)
       limit_value = RubyVIM.get('g:alpaca_english_max_candidates')
       sql += " limit #{limit_value}" unless sql.match(/limit/)
+      # [review] - こまめにcloseすべき？それをするなら、blockを渡す形にしようか...
       db.execute(sql)
     end
   end

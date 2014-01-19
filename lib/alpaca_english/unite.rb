@@ -1,8 +1,8 @@
 require 'mechanize'
 module AlpacaEnglish
-  module Unite #{{{
-    # [todo] - これはひどい。時間がかかるから、最後にやろう。テストも書こう。
-    def self.parse_input(input) #{{{
+  module Unite #
+    def self.parse_input(input)
+      # [todo] - これはひどい。時間がかかるから、最後にやろう。テストも書こう。
       splited = input.split(" ")
       and_conditions = []
       or_conditions = []
@@ -18,11 +18,11 @@ module AlpacaEnglish
         next if word.loose_empty?
 
         # and なのか orなのか
-        conditions = if text == splited.first || text.is_or? then
-                       or_conditions
-                     else
-                       and_conditions
-                     end
+        conditions = if text == splited.first || text.is_or?
+          or_conditions
+        else
+          and_conditions
+        end
 
         conditions << if text.is_japanese? then
                       "mean like '%#{word}%'"
@@ -32,46 +32,45 @@ module AlpacaEnglish
       end
 
       conditions = []
-      conditions << or_conditions.join(" or ")
+      conditions << or_conditions.join(' or ')
 
-      and_conditions = and_conditions.join(" and ")
-      conditions = ["(", conditions, ")", "and", and_conditions].flatten unless and_conditions.empty?
+      and_conditions = and_conditions.join(' and ')
 
-      "where #{conditions.join(" ")}"
-    end #}}}
+      unless and_conditions.empty?
+        conditions = ['(', conditions, ')', 'and', and_conditions].flatten
+      end
 
-    def self.search_with_complex_conditions(input)# {{{
+      "where #{conditions.join(' ')}"
+    end
+
+    def self.search_with_complex_conditions(input)
       sql_opt = []
       sql_opt << parse_input(input)
-      sql = "select * from items #{sql_opt.flatten.join(" ")}"
+      sql = "select * from items #{sql_opt.flatten.join(' ')}"
 
-      AlpacaEnglish::DB.execute(sql) # result
-    end# }}}
+      AlpacaEnglish::DB.execute(sql)
+    end
 
-    def self.web_search(word) # {{{
-      web_search_url = RubyVIM.get("g:alpaca_english_web_search_url")
-      query_url = sprintf(web_search_url, word)
-      query_xpath = RubyVIM.get("g:alpaca_english_web_search_xpath")
+    def self.web_search(word)
+      url = 'http://eow.alc.co.jp/%s/UTF-8/'
+      query_url = sprintf(url, word)
 
       agent = ::Mechanize.new
       page = agent.get(query_url)
-      list = page.search(query_xpath)
+      list = page.search("div[@id='resultsList']/ul/li")
 
-      complete = []
+      candidates = []
       list.each do |element|
-        res = {}
+        result = {}
         element_array = element.text.split("\n").map { |s| s.chomp }
         element_array.delete_if { |s| s.empty? }
-        res["example"] = element_array[0]
-        res["transrate"] = element_array[1,element_array.length - 1].join("")
+        result['example'] = element_array[0]
+        result['transrate'] = element_array[1,element_array.length - 1].join('')
 
-        complete << res
+        candidates << result
       end
 
-      complete
-    end# }}}
-
-    def self.thesaurus_search(word)
+      candidates
     end
-  end #}}}
+  end #
 end

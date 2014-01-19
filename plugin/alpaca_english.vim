@@ -31,7 +31,7 @@ let g:loaded_alpaca_english = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:alpaca_english_plugin_root_dir = expand("<sfile>:p:h:h")
+let g:alpaca_english_plugin_root_dir = expand('<sfile>:p:h:h')
 let g:alpaca_english_enable = get(g:, 'alpaca_english_enable', 0)
 let g:alpaca_english_max_candidates = get(g:, 'alpaca_english_max_candidates', 20)
 let g:alpaca_english_db_path = get(g:, 'alpaca_english_db_path',
@@ -41,14 +41,10 @@ let g:alpaca_english_enable_duplicate_candidates =
 let g:alpaca_english_say_ignore_char = get(g:, 'alpaca_english_say_ignore_char',
       \ {
       \ '[!]' : '.',
-      \ "#" : " number ",
+      \ '#' : ' number ',
       \ '["=>]' : '',
       \ })
 let g:alpaca_english_use_cursor_word = get(g:, 'alpaca_english_use_cursor_word', 1)
-let g:alpaca_english_web_search_url =
-      \ get(g:, 'alpaca_english_web_search_url', 'http://eow.alc.co.jp/%s/UTF-8/')
-let g:alpaca_english_web_search_xpath =
-      \ get(g:, 'alpaca_english_web_search_xpath', "div[@id='resultsList']/ul/li")
 
 command! AlpacaEnglishDisable let b:alpaca_english_enable = 0
 command! AlpacaEnglishEnable let b:alpaca_english_enable = 1

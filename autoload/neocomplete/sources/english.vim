@@ -12,7 +12,7 @@ function! neocomplete#sources#english#define() "{{{
 endfunction"}}}
 
 function! s:to_canditates(dict) "{{{
-  let res = []
+  let result = []
   for record in a:dict
     let candidate = {
           \ 'word' : record[1],
@@ -21,10 +21,10 @@ function! s:to_canditates(dict) "{{{
           \ 'dup' : g:alpaca_english_enable_duplicate_candidates,
           \ 'info': record[2],
           \ }
-    call add(res, candidate)
+    call add(result, candidate)
   endfor
 
-  return res
+  return result
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
