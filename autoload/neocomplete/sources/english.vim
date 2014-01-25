@@ -28,9 +28,9 @@ function! neocomplete#sources#english#to_candidates(dict) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  if get(b:, 'alpaca_english_enable', 0) &&
-        \ (neocomplete#is_text_mode() && a:context.complete_str !~# '^[[:alpha:]]\+$')
-
+  let is_enabled = get(b:, 'alpaca_english_enable', g:alpaca_english_enable)
+  let is_english = neocomplete#is_text_mode() && a:context.complete_str =~# '^[[:alpha:]]\+$'
+  if !(is_enabled && is_english)
     return []
   endif
 

@@ -7,8 +7,9 @@ let s:source = {
       \ }
 
 function! s:source.get_keyword_list(cur_keyword_str)
-  if get(b:, 'alpaca_english_enable', 0) &&
-        \ (neocomplete#is_text_mode() && a:context.complete_str !~# '^[[:alpha:]]\+$')
+  let is_enabled = get(b:, 'alpaca_english_enable', g:alpaca_english_enable)
+  let matched = neocomplcache#is_text_mode() && a:context.complete_str =~# '^[[:alpha:]]\+$'
+  if !is_enabled || !(is_enabled && matched)
     return []
   endif
 
