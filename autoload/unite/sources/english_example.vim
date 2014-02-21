@@ -32,12 +32,12 @@ let s:unite_source = {
 
 function! s:to_canditates(result) "{{{
   let canditates = []
-  for can in a:result
+  for canditate in a:result
     let candidate = {
-          \ "word" : can["example"] . "\n" . can["transrate"],
-          \ "__unite_english" : can["example"],
-          \ "__unite_transrate" : can["transrate"],
-          \ "is_multiline" : 1,
+          \ 'word' : canditate['example'] . "\n" . canditate['transrate'],
+          \ '__unite_english' : canditate['example'],
+          \ '__unite_transrate' : canditate['transrate'],
+          \ 'is_multiline' : 1,
           \ }
     call add(canditates, candidate)
   endfor
@@ -53,7 +53,7 @@ function! s:unite_source.gather_candidates(args, context) "{{{
   ruby << EOF
   require 'mechanize'
 
-  word = VIM.get("input")
+  word = RubyVIM.get("input")
   condition = if word.match(/^[a-zA-Z]+$/) then
                 %w[qotCE qotCJ]
               else
@@ -76,10 +76,10 @@ function! s:unite_source.gather_candidates(args, context) "{{{
     complete << res
   end
 
-  VIM.let("result", complete)
+  RubyVIM.let("result", complete)
 EOF
 
-  if input =~ '^\s*$' || empty(result) 
+  if input =~ '^\s*$' || empty(result)
     return [{"word" : "error occurd", "is_dummy" : 1}]
   else
     return s:to_canditates(result)

@@ -1,5 +1,3 @@
-let g:alpaca_english#debug = {}
-
 function! alpaca_english#initialize() "{{{
   if exists('s:initialized')
     return 0
@@ -7,41 +5,33 @@ function! alpaca_english#initialize() "{{{
   let s:initialized = 1
 
   ruby << EOF
-  plugin_root_path = VIM.evaluate("g:alpaca_english_plugin_root_dir")
-  $: << File.expand_path("#{plugin_root_path}/lib")
+  plugin_root_path = VIM.evaluate('g:alpaca_english_plugin_root_dir')
+  $:.unshift File.expand_path("#{plugin_root_path}/lib")
+
   require 'alpaca_english'
 EOF
-
-  return 1
 endfunction"}}}
 
 function! alpaca_english#is_active() "{{{
-  if !exists("alpaca_english#enable")
-    let alpaca_english#enable = 1
-  endif
-
-  return has('ruby') && exists('g:alpaca_english_db_path') && alpaca_english#enable
+  return has('ruby')
 endfunction"}}}
 
 function! alpaca_english#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None
 endfunction"}}}
 
-function! s:exists_vimproc() "{{{
-  if !exists('s:exists_vimproc')
-    try
-      call vimproc#version()
-    catch
-    endtry
 
-    let s:exists_vimproc =
-          \ (exists('g:vimproc_dll_path') && filereadable(g:vimproc_dll_path))
-          \ || (exists('g:vimproc#dll_path') && filereadable(g:vimproc#dll_path))
+function! alpaca_english#completefunc(findstart, base)
+  if a:findstart
+    let [line, start] = [getline('.'), col('.') - 1]
+    while start > 0 && line[start - 1] =~ '\a'
+      let start -= 1
+    endwhile
+
+    return start
   endif
 
-  return s:exists_vimproc
-endfunction"}}}
+  let result = alpaca_english#sqlite#search(a:base)
 
-function! alpaca_english#system(commands) "{{{
-  return s:exists_vimproc() ? vimproc#system_bg(a:commands) : system(commands)
-endfunction"}}}
+  return neocomplete#sources#english#to_candidates(result)
+endfunction

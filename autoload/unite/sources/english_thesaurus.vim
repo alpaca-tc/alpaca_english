@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: thesaurus.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
-" Last Modified: 2013-05-12
+" Last Modified: Jan 19 2014
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -30,15 +30,17 @@ let s:unite_source = {
 
 function! s:to_canditates(result) "{{{
   let canditates = []
-  for can in a:result
-    let candidate = {
-          \ "word" : can["english"] . "\n" . can["transrate"] . "\n" . join(can["thesaurus"], ", "),
-          \ "is_multiline" : 1,
-          \ "__unite_english" : can["english"],
-          \ "__unite_transrate": can["transrate"],
-          \ "__unite_thesaurus": can["thesaurus"],
+  for candidate in a:result
+    let thesaurus = join(candidate['thesaurus'], ', ')
+    let word = join([candidate['english'], candidate['transrate']], "\n")
+    let candidate_converted = {
+          \ 'word' : word,
+          \ 'is_multiline' : 1,
+          \ '__unite_english' : candidate['english'],
+          \ '__unite_transrate': candidate['transrate'],
+          \ '__unite_thesaurus': candidate['thesaurus'],
           \ }
-    call add(canditates, candidate)
+    call add(canditates, candidate_converted)
   endfor
 
   return canditates
@@ -48,30 +50,29 @@ function! s:unite_source.gather_candidates(args, context) "{{{
   call alpaca_english#initialize()
   let input = unite#english_util#get_input(a:context)
 
-  " TODO リファクタリング
   ruby << EOF
   require 'mechanize'
   agent = Mechanize.new
-  word = VIM.get("input")
+  word = RubyVIM.get('input')
   page = agent.get("http://ejje.weblio.jp/english-thesaurus/content/#{word}")
   list = page.search("div[@class='kiji']/table[@class='wdntT']//tr")
 
-  complete = []
+  candidates = []
   list.each do |element|
-    res = {}
-    res["words"] = element.search("p[@class='wdntCL']").text
-    res["transrate"] = element.search("p[@class='wdntTCLJ']").text
-    res["thesaurus"] = res["words"].split(", ")
-    res["english"] = element.search("p[@class='wdntTCLE']").text
+    result = {}
+    result['words'] = element.search("p[@class='wdntCL']").text
+    result['transrate'] = element.search("p[@class='wdntTCLJ']").text
+    result['thesaurus'] = result['words'].split(", ")
+    result['english'] = element.search("p[@class='wdntTCLE']").text
 
-    complete << res unless res["words"].empty?
+    candidates << result unless result['words'].empty?
   end
 
-  VIM.let("result", complete)
+  RubyVIM.let('result', candidates)
 EOF
 
-  if input =~ '^\s*$' || empty(result) 
-    return [{"word" : "error occurd", "is_dummy" : 1}]
+  if input =~ '^\s*$' || empty(result)
+    return [{ 'word' : 'error occurd', 'is_dummy' : 1 }]
   else
     return s:to_canditates(result)
   endif
@@ -80,4 +81,3 @@ endfunction"}}}
 function! unite#sources#english_thesaurus#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : {}
 endfunction"}}}
-"}}}

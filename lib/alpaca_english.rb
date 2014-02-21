@@ -1,21 +1,12 @@
 require 'json'
 require 'sqlite3'
 
-require 'vim.rb'
-require 'sqlite/sqlite.rb'
-require 'core_ext/string.rb'
+require_relative 'ruby_vim'
+require_relative 'sqlite/sqlite'
+require_relative 'core_ext/string'
 
-module AlpacaEnglish #{{{
-  def self.run #{{{
-    # TODO instance_evalの形に出来ないかな。
-    begin
-      yield
-    rescue => e
-      VIM::message("error occurd. #{e.inspect}")
-    end
-  end #}}}
-
-  autoload :DB, 'alpaca_english/db.rb'
-  autoload :Unite, 'alpaca_english/unite.rb'
-  autoload :Completion, 'alpaca_english/completion.rb'
-end #}}}
+module AlpacaEnglish
+  autoload :DB, 'alpaca_english/db'
+  autoload :Unite, 'alpaca_english/unite'
+  autoload :Completion, 'alpaca_english/completion'
+end

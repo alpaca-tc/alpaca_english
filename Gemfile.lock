@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     domain_name (0.5.11)
       unf (>= 0.0.5, < 1.0.0)

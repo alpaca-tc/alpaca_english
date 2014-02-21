@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: english.vim
 " AUTHOR: Ishii Hiroyuki <alprhcp666@gmail.com>
-" Last Modified: 2013-04-23
+" Last Modified: Jan 19 2014
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,61 +32,53 @@ let s:unite_source = {
       \ 'matchers' : 'matcher_english',
       \}
 
-" define filter"{{{
-" TODO filtersに移動
 let s:filters = {
-  \ "name" : "matcher_english",
+  \ 'name' : 'matcher_english',
   \ }
-
-function! s:filters.filter(candidates, context)
+function! s:filters.filter(candidates, context) "{{{
   return a:candidates
-endfunction
+endfunction "}}}
 call unite#define_filter(s:filters)
-"}}}
+
 
 function! s:to_canditates(dict) "{{{
-  let res = []
+  let result = []
   for record in a:dict
-    let can = {
-          \ "word" : record[1]. " " . record[2],
-          \ "abbr" : record[1]. " " . record[2],
-          \ "__unite_english" : record[1],
-          \ "__unite_transrate" : record[2],
+    let candidate = {
+          \ 'word' : record[1] . ' ' . record[2],
+          \ 'abbr' : record[1] . ' ' . record[2],
+          \ '__unite_english' : record[1],
+          \ '__unite_transrate' : record[2],
           \ }
-    call add(res, can)
+    call add(result, candidate)
   endfor
 
-  return res
+  return result
 endfunction"}}}
 
-function! s:get_dummy_candidates() "{{{
+function! s:get_splash() "{{{
   return [
-        \ {"word": "Hi, I'm alpaca_english! ・T・", "is_dummpy": 1 },
-        \ {"word": "Let's input any word.", "is_dummpy": 1 },
-        \ {"word": "", "is_dummpy": 1 },
-        \ {"word": " word   => and filter", "is_dummpy": 1 },
-        \ {"word": " |word  => or filter", "is_dummpy": 1, "is_multiline": 1 },
-        \ {"word": " %word  => fuzzy filter", "is_dummpy": 1, "is_multiline": 1 },
-        \ {"word": " 日本語 => 英和辞書", "is_dummpy": 1, "is_multiline": 1 },
+        \ { 'word' : "Hi, I'm alpaca_english! ・T・", 'is_dummpy': 1 },
+        \ { 'word' : "Let's input any word.", 'is_dummpy': 1 },
+        \ { 'word' : '', 'is_dummpy': 1 },
+        \ { 'word' : ' word   => and filter', 'is_dummpy': 1 },
+        \ { 'word' : ' |word  => or filter', 'is_dummpy': 1, 'is_multiline': 1 },
+        \ { 'word' : ' %word  => fuzzy filter', 'is_dummpy': 1, 'is_multiline': 1 },
+        \ { 'word' : ' 日本語 => 英和辞書', 'is_dummpy': 1, 'is_multiline': 1 },
         \ ]
-endfunction"}}}
+endfunction "}}}
 
-" define source"{{{
 function! s:unite_source.gather_candidates(args, context) "{{{
-  let input = a:context["input"]
+  let input = a:context.input
 
   if input =~ '^\s*$'
-    return s:get_dummy_candidates()
+    return s:get_splash()
   else
-    let res = alpaca_english#sqlite#search_with_complex_conditions(a:args, a:context)
-    return empty(res) ? res : s:to_canditates(res)
+    let result = alpaca_english#sqlite#search_with_complex_conditions(a:args, a:context)
+    return empty(result) ? result : s:to_canditates(result)
   endif
-endfunction"}}}
+endfunction "}}}
 
-function! s:unite_source.hooks.on_syntax(args, context)
-endfunction
-
-function! unite#sources#english_dictionary#define()
+function! unite#sources#english_dictionary#define() "{{{
   return alpaca_english#is_active() ? s:unite_source : {}
-endfunction
-"}}}
+endfunction"}}}
