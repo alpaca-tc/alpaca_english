@@ -1,17 +1,14 @@
 # AlpacaEnglish
 
+このプラグインは、英語を話したいけど話せない!
+OSS開発で外人とチャットするけど難しい。
+そんな人(僕)用のプラグインです。
 
-## About me
-
-このプラグインは英語を話したいけど、話せない!!
-OSS開発で外人とチャットするけど難しい、そんな人(僕)用のプラグインです。
-
-## About feature
+## 機能
 
 completefuncで英単語を補完します。僕は英語力が弱いので、日本語訳も一緒に欲しいなとずっと思ってました。
-SQLite補完なので、爆速です。
 
-### The English complete(辞書を使った英単語補完)
+### 英語補完(辞書を使った英単語補完)
 
 ![english補完](http://cl.ly/image/1l1l0g272I1N/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202013-04-21%208.37.39.png)
 
@@ -31,9 +28,9 @@ SQLite補完なので、爆速です。
 
 ### Say
 
-AlpacaEnglishSayコマンドで、選択範囲の文字を音声で読み上げます(MacOnly)
+`AlpacaEnglishSay`コマンドは、選択範囲の文字を音声で読み上げます(MacOnly)
 
-## How to install
+## インストール
 
 vim
 ======
@@ -50,24 +47,28 @@ if has("ruby")
   NeoBundle 'taichouchou2/alpaca_english', {
         \ 'rev' : 'development',
         \ 'build' : {
-        \   "mac" : "bundle",
-        \   "unix" : "bundle",
-        \   "other" : "bundle",
+        \   'mac' : 'bundle',
+        \   'unix' : 'bundle',
+        \   'other' : 'bundle',
         \ },
         \ 'autoload' : {
         \   'filetypes' : ['markdown', 'text'],
-        \   'commands' : ["AlpacaEnglishDisable", "AlpacaEnglishEnable", "AlpacaEnglishSay"],
+        \   'commands' : ['AlpacaEnglishDisable', 'AlpacaEnglishEnable', 'AlpacaEnglishSay'],
         \   'unite_sources': ['english_dictionary', 'english_example', 'english_thesaurus'],
         \ }
         \ }
 endif
 
 " 有効にする
-let g:alpaca_english_enable=1
+let g:alpaca_english_enable = 1
+" let b:alpaca_english_enable = 1 " Buffer内のみ有効
 " SQL検索のLIMITを設定
-let g:alpaca_english_max_candidates=100
+let g:alpaca_english_max_candidates = 100
 " Buffer補完などで、既に候補がある場合も英語の候補を表示する
-let g:alpaca_english_enable_duplicate_candidates=1
+let g:alpaca_english_enable_duplicate_candidates = 1
+
+" ---
+" NeoComplete / NeoComplcacheを使う場合の設定
 
 " 補完を有効にするファイルタイプを追加
 let g:neocomplcache_text_mode_filetypes = {
@@ -75,6 +76,15 @@ let g:neocomplcache_text_mode_filetypes = {
   \ 'gitcommit' : 1,
   \ 'text' : 1,
   \ }
+let g:neocomplete#text_mode_filetypes = g:neocomplcache_text_mode_filetypes
+
+
+" ---
+" Completefuncを使う場合の設定
+augroup MyAutoCmd
+  autocmd!
+  autocmd FileType markdown,text setl completefunc=alpaca_english#completefunc
+augroup END
 ```
 
 ### bundler
@@ -88,14 +98,26 @@ $ gem install bundler
 $ bundle
 ```
 
-## 実装予定
+## License
 
-- 英単語の動的補完(日本語訳つき)(finished)
-- 英単語の読み上げ(Mac Only)(finished)
-- Uniteを使った単語帳。
-    - 検索(日本語、英語両方可能)(finished)
-    - 類義語検索(finished)
-    - 例文検索(finished)
-    - 記録
-    - メモ
-    - 新規追加
+The MIT License (MIT)
+
+Copyright (c) <2014> <Ishii Hiroyuki>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
